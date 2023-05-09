@@ -1,0 +1,52 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/bcm2835.h>
+
+/ {
+compatible = "brcm,bcm2835";
+
+    fragment@0 {
+            target = <&gpio>;
+            __overlay__ {
+                    tsc2007_pins: tsc2007_pins {
+                            brcm,pins = <25>;
+                            brcm,function = <BCM2835_FSEL_GPIO_IN>; /* in */
+                            /*brcm,pull = <2 0>; / * pullup none */
+                    };
+            };
+    };
+
+    fragment@1 {
+            target = <&i2c1>;
+            __overlay__ {
+                    #address-cells = <1>;
+                    #size-cells = <0>;
+                    status = "okay";
+
+                    tsc2007: tsc2007@48 {
+                            compatible = "ti,tsc2007";
+                            reg = <0x48>;
+            		interrupt-parent = <&gpio>;
+            		interrupts = <25 IRQ_TYPE_LEVEL_LOW>; 
+            		gpios = <&gpio 25 GPIO_ACTIVE_LOW>;
+            		ti,x-plate-ohms = <300>;
+			ti,max_rt = <4096>;
+			ti,poll_period = <5>;
+			ti,fuzzy = <64>;
+			ti,fuzzz = <64>;
+			ti,fuzzx = <64>;
+                    };
+            };
+    };
+   
+
+    __overrides__ {
+            irq_pin = <&tsc2007>, "interrupts:0",
+                      <&tsc2007>, "gpios:4",
+                      <&tsc2007_pins>, "brcm,pins:0";
+    };
+
+};
