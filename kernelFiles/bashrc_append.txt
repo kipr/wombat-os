@@ -1,8 +1,0 @@
-export LD_LIBRARY_PATH="/usr/local/qt6/lib:/usr/local/lib"
-
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        SESSION_TYPE=remote/ssh
-else
-        startx
-        /usr/local/bin/botui
-fi
