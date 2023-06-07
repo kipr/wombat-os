@@ -71,7 +71,7 @@ dtoverlay=hifiberry-dac
 #display_auto_detect=1
 
 # Enable DRM VC4 V3D driver
-#dtoverlay=vc4-kms-v3d
+dtoverlay=vc4-kms-v3d
 #max_framebuffers=2
 
 # Run in 64-bit mode
