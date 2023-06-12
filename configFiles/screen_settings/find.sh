@@ -10,3 +10,8 @@ else #if using default configs, need inverted
         sudo cp /home/kipr/wombat-os/screen_settings/Inverted/99-calibration.conf /etc/X11/xorg.conf.d/99-calibration.conf
         system("xrandr --output HDMI-1 --rotate inverted")
         echo "Default settings found"
+
+fi
+sleep 2
+
+sudo reboot -h now
