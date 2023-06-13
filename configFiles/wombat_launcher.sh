@@ -8,4 +8,5 @@ export LD_LIBRARY_PATH=/usr/local/qt6/lib:/usr/local/lib
 
 cd harrogate
 sudo node server.js &
+exec /home/kipr/wombat-os/configFiles/firstTimeScreen.sh &
 sudo /usr/local/bin/botui &
