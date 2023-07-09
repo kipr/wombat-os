@@ -1,4 +1,5 @@
 echo "Starting Wombat Update"
+sudo chmod -R 777 /home/kipr/wombat-os || echo "Failed to chmod wombat-os"
 cd /home/kipr/wombat-os || echo "Failed to cd to wombat-os"
 git reset HEAD --hard || echo "Failed to reset git"
 git pull || echo "Failed to pull git"
