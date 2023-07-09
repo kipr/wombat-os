@@ -1,5 +1,7 @@
+echo "Starting Wombat Update"
 cd /home/kipr/wombat-os || echo "Failed to cd to wombat-os"
 git reset HEAD --hard || echo "Failed to reset git"
 git pull || echo "Failed to pull git"
 cd /home/kipr/wombat-os/updateFiles || echo "Failed to cd to updateFiles"
+echo "Update downloaded, running update script"
 sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && echo "Update Complete" || echo "Update Failed"
