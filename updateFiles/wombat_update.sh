@@ -66,12 +66,12 @@ cp $TARGET $HOME
 
 #Adding Default Programs
 echo "Checking for Default User"
-TARGET=wombat-os/updateFiles/files/"Default User"
+TARGET="/home/kipr/wombat-os/updateFiles/files/Default User"
 if [ ! -d "/home/kipr/Documents/KISS/Default User/" ]; then
-    mkdir /home/kipr/Documents/KISS/"Default User"
+    mkdir "/home/kipr/Documents/KISS/Default User"
 fi
 echo "Adding Default Programs"
-sudo cp -r $TARGET /home/kipr/Documents/KISS/"Default User"
+sudo cp -r $TARGET "/home/kipr/Documents/KISS/Default User"
 
 echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
