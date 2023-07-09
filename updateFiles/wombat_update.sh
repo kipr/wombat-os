@@ -7,6 +7,7 @@ echo "Starting Wombat Update #$FW_VERSION"
 echo "..."
 
 HOME=/home/kipr
+cd $HOME/wombat-os
 
 ###############################
 #
