@@ -25,6 +25,17 @@ mount -o remount,rw /
 #
 ###############################
 
+# harrogate
+echo "Updating harrogate..."
+sudo rm -r /home/kipr/harrogate
+sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
+sudo chmod 777 /home/kipr/harrogate
+cd /home/kipr/harrogate
+sudo npm install
+sudo killall node
+sudo gulp &
+cd $HOME/wombat-os/updateFiles
+
 # libkar
 echo "Updating libkar..."
 sudo dpkg -i pkgs/libkar.deb
@@ -42,15 +53,6 @@ echo "Updating botui..."
 sudo rm -r /usr/local/bin/botui
 sudo dpkg -i pkgs/botui.deb
 
-# harrogate
-echo "Updating harrogate..."
-sudo rm -r /home/kipr/harrogate
-sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
-sudo chmod 777 /home/kipr/harrogate
-cd /home/kipr/harrogate
-sudo npm install
-sudo killall node
-sudo gulp &
 cd $HOME
 
 ###############################
