@@ -75,7 +75,7 @@ if [ ! -d "/home/kipr/Documents/KISS/Default User/" ]; then
     mkdir /home/kipr/Documents/KISS/'Default User'
 fi
 echo "Adding Default Programs"
-sudo cp -r $TARGET /home/kipr/Documents/KISS/'Default User'
+cp -r $TARGET /home/kipr/Documents/KISS/'Default User'
 
 echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
