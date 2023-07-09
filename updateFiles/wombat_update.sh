@@ -81,7 +81,7 @@ sudo chmod +x wallaby_flash wallaby_get_id.sh wallaby_set_serial.sh
 sudo ./wallaby_flash
 
 echo "Letting harrogate finish gulping"
-sleep 90
+sleep 70
 
 
 ###############################
