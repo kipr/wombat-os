@@ -8,6 +8,7 @@ echo "..."
 
 HOME=/home/kipr
 cd $HOME/wombat-os/updateFiles
+cp files/updateMe.sh $HOME
 
 ###############################
 #
