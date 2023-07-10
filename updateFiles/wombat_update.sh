@@ -66,7 +66,8 @@ cd $HOME
 # Copy Wombat Launcher to home directory
 TARGET=wombat-os/configFiles/wombat_launcher.sh
 echo "Copying the launcher"
-cp $TARGET $HOME
+sudo cp $TARGET $HOME
+sudo chmod 777 $HOME/wombat_launcher.sh
 
 #Adding Default Programs
 echo "Checking for Default User"
@@ -75,8 +76,9 @@ if [ ! -d "/home/kipr/Documents/KISS/Default User/" ]; then
     mkdir /home/kipr/Documents/KISS/'Default User'
 fi
 echo "Adding Default Programs"
-cd $TARGET
-cp -r * /home/kipr/Documents/KISS/'Default User'
+cd $TARGET || echo "Failed to cd to $TARGET"
+sudo cp -R * /home/kipr/Documents/KISS/'Default User' || echo "Failed to copy Default Programs"
+sudo chmod -R 777 /home/kipr/Documents/KISS/'Default User' || echo "Failed to chmod Default Programs"
 
 echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
