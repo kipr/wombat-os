@@ -74,10 +74,11 @@ echo "Checking for Default User"
 TARGET=/home/kipr/wombat-os/updateFiles/files/'Default User'
 if [ ! -d "/home/kipr/Documents/KISS/Default User/" ]; then
     mkdir /home/kipr/Documents/KISS/'Default User'
+else 
+    echo "Default User already exists"
 fi
 echo "Adding Default Programs"
-cd $TARGET || echo "Failed to cd to $TARGET"
-sudo cp -R * /home/kipr/Documents/KISS/'Default User' || echo "Failed to copy Default Programs"
+sudo cp -R $TARGET /home/kipr/Documents/KISS/'Default User'/* || echo "Failed to copy Default Programs"
 sudo chmod -R 777 /home/kipr/Documents/KISS/'Default User' || echo "Failed to chmod Default Programs"
 
 echo "Flashing the Processor"
