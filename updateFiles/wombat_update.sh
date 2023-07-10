@@ -33,8 +33,13 @@ sudo rm -r /home/kipr/harrogate
 sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
 sudo chmod 777 /home/kipr/harrogate
 cd /home/kipr/harrogate
-sudo npm install
+echo "Installing harrogate dependencies..."
+npm install browserfy
+npm install
+sudo npm install -g gulp@4 gulp-cli
+echo "Killing any running harrogate processes..."
 sudo killall node
+echo "Starting harrogate..."
 sudo gulp &
 cd $HOME/wombat-os/updateFiles
 
