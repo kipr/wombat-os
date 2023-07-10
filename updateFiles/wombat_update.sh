@@ -76,15 +76,16 @@ sudo chmod 777 $HOME/wombat_launcher.sh
 
 #Adding Default Programs
 echo "Checking for Default User"
-TARGET=/home/kipr/wombat-os/updateFiles/files/'Default User'/
-if [ ! -d "/home/kipr/Documents/KISS/Default User/" ]; then
-    mkdir /home/kipr/Documents/KISS/'Default User'/ || echo "Failed to make Default User"
+TARGET="/home/kipr/wombat-os/updateFiles/files/Default User/"
+CP_TARGET="/home/kipr/Documents/KISS/Default User/"
+if [ ! -d "$CP_TARGET" ]; then
+    mkdir $CP_TARGET || echo "Failed to make Default User"
 else 
     echo "Default User already exists"
 fi
 echo "Adding Default Programs"
-sudo cp -R $TARGET /home/kipr/Documents/KISS/'Default User'/* || echo "Failed to copy Default Programs"
-sudo chmod -R 777 /home/kipr/Documents/KISS/'Default User'/ || echo "Failed to chmod Default Programs"
+sudo cp -R $TARGET $CP_TARGET || echo "Failed to copy Default Programs"
+sudo chmod -R 777 $CP_TARGET || echo "Failed to chmod Default Programs"
 
 echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
