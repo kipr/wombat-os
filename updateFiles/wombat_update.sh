@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FW_VERSION=30.1
+FW_VERSION=30.1.1
 
 echo "   "
 echo "Starting Wombat Update #$FW_VERSION"
