@@ -107,7 +107,6 @@ void analogTest()
 
 	while(!is_done()) {
 		done_message(1);
-		publish();
       	i=0;
       	//prints out all digital values
       	for(;i<10;++i){
