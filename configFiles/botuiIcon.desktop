@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Botui
+Exec=/usr/local/bin/botui
+Comment=
+Icon=/usr/share/plymouth/themes/pix/splash.png
+Terminal=false
+Icon=/usr/share/plymouth/themes/pix/splash.png
+Type=Application

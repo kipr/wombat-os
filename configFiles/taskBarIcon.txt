@@ -1,0 +1,8 @@
+Plugin {
+type=launchbar
+Config {
+Button {
+id=alacarte-made.desktop
+}
+}
+}
