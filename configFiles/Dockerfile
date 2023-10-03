@@ -1,6 +1,34 @@
-# This is an auto generated Dockerfile for ros:ros-base
-# generated from docker_images_ros2/create_ros_image.Dockerfile.em
-FROM ros:humble-ros-core-jammy
+FROM ubuntu:jammy
+
+# setup timezone
+RUN echo 'Etc/UTC' > /etc/timezone && \
+    ln -s /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
+    apt-get update && \
+    apt-get install -q -y --no-install-recommends tzdata && \
+    rm -rf /var/lib/apt/lists/*
+
+# install packages
+RUN apt-get update && apt-get install -q -y --no-install-recommends \
+    dirmngr \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros2/ubuntu jammy main" > /etc/apt/sources.list.d/ros2-latest.list
+
+# setup keys
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+# setup environment
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+ENV ROS_DISTRO humble
+
+# install ros2 packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-ros-core=0.10.0-1* \
+    && rm -rf /var/lib/apt/lists/*
 
 # install bootstrap tools
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -37,4 +65,12 @@ RUN apt-get update && apt-get install -y \
     nano \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo 'export RMW_IMPLEMENTATION=rmw_fastrtps_cpp' >> $HOME/.bashrc \
+COPY fastdds_xml /home/fastdds_xml
+COPY ./ros_entrypoint.sh /
+
+
+RUN echo 'export RMW_IMPLEMENTATION=rmw_fastrtps_cpp' >> $HOME/.bashrc
+RUN echo 'export FASTRTPS_DEFAULT_PROFILES_FILE=/home/fastdds_xml' >> $HOME/.bashrc
+
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
