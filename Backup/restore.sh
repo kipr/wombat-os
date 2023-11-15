@@ -3,6 +3,7 @@
 echo -e "Mounting USB drive... \n"
 sudo mount /dev/sd?? /mnt
 cd /mnt
+sudo chmod -R 777 /home/kipr/Documents/KISS
 echo -e "Moving projects from flash drive to the Controller... \n"
 for dir in *; do
     if [ -d "$dir" ]; then
@@ -26,6 +27,9 @@ for dir in *; do
         cd ..
     fi
 done
+
+echo -e "\nCopying users.json to /home/kipr/Documents/KISS..."
+sudo scp users.json /home/kipr/Documents/KISS
 
 cd /home/kipr/Documents/KISS
 
