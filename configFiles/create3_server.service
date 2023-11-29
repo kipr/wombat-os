@@ -2,7 +2,7 @@
 Description=Create3 Server
 
 [Service]
-ExecStart=/bin/bash -c '$HOME/wombat-os/configFiles/start_create3_server.sh'
+ExecStart=/home/kipr/wombat-os/configFiles/start_create3_server.sh'
 ExecStop=sudo podman stop -t 10 create3_server
 
 [Install]
