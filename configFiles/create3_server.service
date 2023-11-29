@@ -2,6 +2,7 @@
 Description=Create3 Server
 
 [Service]
+Type=forking
 ExecStart=/home/kipr/wombat-os/configFiles/start_create3_server.sh
 ExecStop=sudo podman stop -t 10 create3_server
 
