@@ -11,4 +11,3 @@ sudo node server.js &
 exec /home/kipr/wombat-os/configFiles/firstTimeScreen.sh &
 sudo /usr/local/bin/botui &
 sudo podman system prune
-sudo podman run -dt --rm --net=host --env IP=192.168.125.1 --name create3_server docker.io/kipradmin/create3_docker
