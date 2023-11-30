@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FW_VERSION=30.1.2
+FW_VERSION=30.2.0
 
 echo "   "
 echo "Starting Wombat Update #$FW_VERSION"
@@ -31,7 +31,7 @@ mount -o remount,rw /
 echo "Updating harrogate..."
 sudo rm -r /home/kipr/harrogate
 sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
-sudo chmod 777 /home/kipr/harrogate
+sudo chmod -R 777 /home/kipr/harrogate
 cd /home/kipr/harrogate
 echo "Installing harrogate dependencies..."
 npm install browserfy
@@ -50,6 +50,9 @@ sudo dpkg -i pkgs/libkar.deb
 # pcompiler
 echo "Updating pcompiler..."
 sudo dpkg -i pkgs/pcompiler.deb
+
+echo "Updating create3..."
+sudo dpkg -i pkgs/create3.deb
 
 # libwallaby
 echo "Updating libwallaby..."
