@@ -6,8 +6,8 @@ echo "Starting Wombat Update"
 cd /home/kipr || { echo "Failed to cd to /home/kipr"; exit 1; }
 
 # Remove directory if it exists
-wombat-os="wombat-os"
-if [ -d "$wombat-os" ]; then
+WOMBAT_OS="wombat-os"
+if [ -d $WOMBAT_OS ]; then
   sudo rm -R wombat-os || { echo "Failed to rm wombat-os"; exit 1; }
 fi
 
