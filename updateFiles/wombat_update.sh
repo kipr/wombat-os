@@ -38,7 +38,7 @@ fi
 
 sudo scp board_fw_version.txt /usr/share/kipr/
 sudo scp create3_server.service /etc/systemd/system/
-sudo scp journal.conf /etc/systemd/journald.conf
+sudo scp journald.conf /etc/systemd/journald.conf
 
 
 ###############################
