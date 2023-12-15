@@ -5,8 +5,8 @@ Requires=podman.service
 
 [Service]
 Type=forking
-ExecStart=/home/kipr/wombat-os/configFiles/start_create3_server.sh start
-ExecStop=/home/kipr/wombat-os/configFiles/start_create3_server.sh stop
+ExecStart=/home/kipr/wombat-os/configFiles/create3_server.sh start
+ExecStop=/home/kipr/wombat-os/configFiles/create3_server.sh stop
 RemainAfterExit=yes
 
 [Install]
