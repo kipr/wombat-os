@@ -1,15 +1,45 @@
 #!/bin/bash
 
-FW_VERSION=30.2.0
+HOME=/home/kipr
+FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
 
 echo "   "
 echo "Starting Wombat Update #$FW_VERSION"
 echo "..."
 
-HOME=/home/kipr
+###############################
+#
+# Check for Current FW Version
+#
+###############################
+
+# Check if board_fw_version.txt exists
+if [ ! -f /usr/share/kipr/board_fw_version.txt ]; then
+    echo "Your version is too old to update. Please reflash your SD card."
+    exit 1
+fi
+
+###############################
+#
+# Move update files
+#
+###############################
+
+# Change to updateFiles directory and copy updateMe.sh to home directory
 cd $HOME/wombat-os/updateFiles
 cp files/updateMe.sh $HOME
 sudo chmod u+x $HOME/updateMe.sh
+
+# Change to configFiles directory and copy board_fw_version.txt to kipr share directory
+cd $HOME/wombat-os/configFiles
+if [ ! -d /usr/share/kipr ]; then
+    sudo mkdir /usr/share/kipr
+fi
+
+sudo scp board_fw_version.txt /usr/share/kipr/
+sudo scp create3_server.service /etc/systemd/system/
+sudo scp journald.conf /etc/systemd/journald.conf
+
 
 ###############################
 #
@@ -29,11 +59,12 @@ mount -o remount,rw /
 
 # harrogate
 echo "Updating harrogate..."
-sudo rm -r /home/kipr/harrogate
-sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
+cd $HOME/wombat-os/updateFiles
+sudo rm -r $HOME/harrogate
+sudo tar -C $HOME -zxvf pkgs/harrogate.tar.gz
 sudo chmod -R 777 /home/kipr/harrogate
-cd /home/kipr/harrogate
 echo "Installing harrogate dependencies..."
+cd $HOME/harrogate
 npm install browserfy
 npm install
 sudo npm install -g gulp@4 gulp-cli
