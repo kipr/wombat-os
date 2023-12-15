@@ -48,7 +48,7 @@ sudo scp journald.conf /etc/systemd/journald.conf
 ###############################
 
 #remount root filesystem as read write
-# mount -o remount,rw /
+mount -o remount,rw /
 
 
 ###############################
@@ -59,11 +59,12 @@ sudo scp journald.conf /etc/systemd/journald.conf
 
 # harrogate
 echo "Updating harrogate..."
-sudo rm -r /home/kipr/harrogate
-sudo tar -C /home/kipr -zxvf pkgs/harrogate.tar.gz
+cd $HOME/wombat-os/updateFiles
+sudo rm -r $HOME/harrogate
+sudo tar -C $HOME -zxvf pkgs/harrogate.tar.gz
 sudo chmod -R 777 /home/kipr/harrogate
-cd $HOME/harrogate
 echo "Installing harrogate dependencies..."
+cd $HOME/harrogate
 npm install browserfy
 npm install
 sudo npm install -g gulp@4 gulp-cli
