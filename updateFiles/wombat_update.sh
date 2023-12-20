@@ -43,6 +43,9 @@ sudo scp journald.conf /etc/systemd/journald.conf
 # Make sure create3 server is executable
 sudo chmod +x create3_server.sh
 
+# Copy new Wombat picture over old one
+sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
+
 ###############################
 #
 # update boot files
