@@ -40,6 +40,8 @@ sudo scp board_fw_version.txt /usr/share/kipr/
 sudo scp create3_server.service /etc/systemd/system/
 sudo scp journald.conf /etc/systemd/journald.conf
 
+# Make sure create3 server is executable
+sudo chmod +x create3_server.sh
 
 ###############################
 #
