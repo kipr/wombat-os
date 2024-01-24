@@ -4,7 +4,8 @@ case "$1" in
         start)
                 sudo podman stop -a
                 sudo podman container prune -f
-                sudo podman run -dt --rm --net=host --env IP=192.168.125.1 --name create3_server docker.io/kipradmin/create3_docker
+                CREATE3_SERVER_IP=$(cat /home/kipr/wombat-os/configFiles/create3_server_ip.txt)
+                sudo podman run -dt --rm --net=host --env IP=$CREATE3_SERVER_IP --name create3_server docker.io/kipradmin/create3_docker
                 ;;
         stop)
                 sudo podman stop create3_server
