@@ -8,12 +8,18 @@ cd /home/kipr || { echo "Failed to cd to /home/kipr"; exit 1; }
 # Remove directory if it exists
 WOMBAT_OS="wombat-os"
 if [ -d $WOMBAT_OS ]; then
-  sudo rm -R wombat-os || { echo "Failed to rm wombat-os"; exit 1; }
+  sudo mv wombat-os wombat-os-old || { echo "Failed to rename wombat-os"; exit 1; }
 fi
 
 # Clone the repo
 echo "Cloning wombat-os"
-git clone https://github.com/kipr/wombat-os.git || { echo "Failed to clone wombat-os"; exit 1; }
+git clone https://github.com/kipr/wombat-os.git || { 
+  echo "Failed to clone wombat-os, restoring old version";
+  sudo rm -R wombat-os;
+  sudo mv wombat-os-old wombat-os;
+  echo "Old version restored";
+  exit 1; 
+}
 
 # Change permissions of wombat-os
 sudo chmod -R 777 /home/kipr/wombat-os || { echo "Failed to chmod wombat-os"; exit 1; }
@@ -24,4 +30,4 @@ cd /home/kipr/wombat-os/updateFiles || { echo "Failed to cd to updateFiles"; exi
 echo "Update downloaded, running update script"
 
 # Run update script
-sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && echo "Update Complete" || { echo "Update Failed"; exit 1; }
+sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && sudo rm -R wombat-os-old && echo "Update Complete" || { echo "Update Failed"; exit 1; }
