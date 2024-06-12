@@ -2,6 +2,21 @@
 
 echo "Starting Wombat Update"
 
+# Check to see if static IP is live
+
+# IP to check
+STATIC_IP="192.168.186.3"
+
+# Ping the IP and check if it is reachable
+ping -c 1 $STATIC_IP &> /dev/null
+
+if [ $? -eq 0 ]; then
+    echo "Wombat is still in Ethernet Mode for Create 3. Please revert to Wifi mode and try updating again. Exiting script."
+    exit 1
+else
+    echo "Wifi Mode check successful. Continuing script."
+fi
+
 # Change to home directory
 cd /home/kipr || { echo "Failed to cd to /home/kipr"; exit 1; }
 
