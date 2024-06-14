@@ -30,6 +30,10 @@ cd $HOME/wombat-os/updateFiles
 cp files/updateMe.sh $HOME
 sudo chmod u+x $HOME/updateMe.sh
 
+echo "Stopping Create 3 Server..."
+sudo systemctl stop create3_server
+
+
 # Change to configFiles directory and copy board_fw_version.txt to kipr share directory
 cd $HOME/wombat-os/configFiles
 if [ ! -d /usr/share/kipr ]; then
@@ -143,8 +147,12 @@ sleep 70
 ###############################
 echo "Finished Wombat Update #$FW_VERSION"
 
-echo "Stopping Create 3 Server..."
-sudo systemctl stop create3_server
+# Remove old wombat-os if it exists
+cd /home/kipr
+if [ -d "wombat-os-old" ]; then
+  sudo rm -R wombat-os-old || { echo "Failed to remove old wombat-os"; exit 1; }
+fi
 
 echo "Rebooting..."
-cd /home/kipr && sudo rm -R wombat-os-old && echo "Update Complete" && sudo reboot || { echo "Failed to remove old version"; exit 1; }
+
+echo "Update Complete" && sudo reboot || { echo "Could not reboot"; exit 1; }
