@@ -4,15 +4,14 @@ echo "Starting Wombat Update"
 
 # Check to see if static IP is live
 
-# IP to check
+# File and IP to check
 STATIC_IP="192.168.186.3"
+FILE_TO_SEARCH="/home/kipr/wombat-os/configFiles/create3_server_ip.txt"
 
-# Ping the IP and check if it is reachable
-ping -c 1 $STATIC_IP &> /dev/null
-
-if [ $? -eq 0 ]; then
+# Use grep to search for the IP address in the file
+if grep -q "$STATIC_IP" "$FILE_TO_SEARCH"; then
     echo "Wombat is still in Ethernet Mode for Create 3. Please revert to Wifi mode and try updating again. Exiting script."
-    exit 1
+    exit 0
 else
     echo "Wifi Mode check successful. Continuing script."
 fi
@@ -45,4 +44,4 @@ cd /home/kipr/wombat-os/updateFiles || { echo "Failed to cd to updateFiles"; exi
 echo "Update downloaded, running update script"
 
 # Run update script
-sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && sudo rm -R wombat-os-old && echo "Update Complete" || { echo "Update Failed"; exit 1; }
+sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && sudo rm -R wombat-os-old && echo "Update Complete" && sudo reboot || { echo "Update Failed"; exit 1; }

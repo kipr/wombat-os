@@ -142,6 +142,8 @@ sleep 70
 #
 ###############################
 echo "Finished Wombat Update #$FW_VERSION"
+
+echo "Stopping Create 3 Server..."
+sudo systemctl stop create3_server
+
 echo "Rebooting..."
-sleep 3
-reboot
