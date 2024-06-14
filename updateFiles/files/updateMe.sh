@@ -44,4 +44,6 @@ cd /home/kipr/wombat-os/updateFiles || { echo "Failed to cd to updateFiles"; exi
 echo "Update downloaded, running update script"
 
 # Run update script
-sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh && sudo rm -R wombat-os-old && echo "Update Complete" && sudo reboot || { echo "Update Failed"; exit 1; }
+sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh || { echo "Update Failed"; exit 1; }
+
+cd /home/kipr && sudo rm -R wombat-os-old && echo "Update Complete" && sudo reboot || { echo "Failed to remove old version"; exit 1; }
