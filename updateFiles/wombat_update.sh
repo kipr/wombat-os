@@ -147,3 +147,4 @@ echo "Stopping Create 3 Server..."
 sudo systemctl stop create3_server
 
 echo "Rebooting..."
+cd /home/kipr && sudo rm -R wombat-os-old && echo "Update Complete" && sudo reboot || { echo "Failed to remove old version"; exit 1; }
