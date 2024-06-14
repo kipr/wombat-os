@@ -19,6 +19,11 @@ fi
 # Change to home directory
 cd /home/kipr || { echo "Failed to cd to /home/kipr"; exit 1; }
 
+# Remove old wombat-os if it exists
+if [ -d "wombat-os-old" ]; then
+  sudo rm -R wombat-os-old || { echo "Failed to remove old wombat-os"; exit 1; }
+fi
+
 # Remove directory if it exists
 WOMBAT_OS="wombat-os"
 if [ -d $WOMBAT_OS ]; then
