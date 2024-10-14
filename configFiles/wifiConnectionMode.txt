@@ -1,0 +1,6 @@
+# AP 0
+# Client 1
+# OFF 2
+
+MODE 0
+EVENT_MODE true
