@@ -30,9 +30,6 @@ cd $HOME/wombat-os/updateFiles
 cp files/updateMe.sh $HOME
 sudo chmod u+x $HOME/updateMe.sh
 
-echo "Stopping Create 3 Server..."
-sudo systemctl stop create3_server
-
 
 # Change to configFiles directory and copy board_fw_version.txt to kipr share directory
 cd $HOME/wombat-os/configFiles
@@ -41,12 +38,9 @@ if [ ! -d /usr/share/kipr ]; then
 fi
 
 sudo scp board_fw_version.txt /usr/share/kipr/
-sudo scp create3_server.service /etc/systemd/system/
 sudo scp journald.conf /etc/systemd/journald.conf
 sudo cat interfaces_wifi.txt > /etc/network/interfaces
 
-# Make sure create3 server is executable
-sudo chmod +x create3_server.sh
 
 # Copy new Wombat picture over old one
 sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
@@ -91,9 +85,6 @@ sudo dpkg -i pkgs/libkar.deb
 # pcompiler
 echo "Updating pcompiler..."
 sudo dpkg -i pkgs/pcompiler.deb
-
-echo "Updating create3..."
-sudo dpkg -i pkgs/create3.deb
 
 # libwallaby
 echo "Updating libwallaby..."
