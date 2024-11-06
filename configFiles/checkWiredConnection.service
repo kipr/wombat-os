@@ -1,0 +1,18 @@
+[Unit]
+Description=Check Wired Wombat Connection Service
+
+After=network.target
+  # This ensures the network is up before the script runs (optional)
+
+[Service]
+ExecStart=/home/kipr/checkWombatWiredConnect.sh
+Restart=always
+   # Optional: to automatically restart the service if it fails
+User=root
+  # Optional: run the service as the 'pi' user (or your user)
+Group=kipr
+WorkingDirectory=/usr/local/bin
+ # Optional: set the working directory for the script
+
+[Install]
+WantedBy=multi-user.target
