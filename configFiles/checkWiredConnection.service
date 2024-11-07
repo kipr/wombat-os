@@ -5,7 +5,7 @@ After=network.target
   # This ensures the network is up before the script runs (optional)
 
 [Service]
-ExecStart=/home/kipr/checkWombatWiredConnect.sh
+ExecStart=/home/kipr/wombat-os/configFiles/checkWombatWiredConnect.sh
 Restart=always
    # Optional: to automatically restart the service if it fails
 User=root
