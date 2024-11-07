@@ -103,6 +103,26 @@ cd $HOME
 #
 ###############################
 
+#Remove Create 3 Capn'Proto files from /
+echo "Removing Create 3 Capn'Proto files if present..."
+capnProtoFiles=$(find / -type f -iname "*capn*" 2>/dev/null)
+if [ -n "$capnProtoFiles" ]; then
+  echo "Found files to delete:"
+  echo "$capnProtoFiles"
+  find / -type f -iname "*capn*" -exec rm -f {} \; 2>/dev/null
+  echo "Files deleted."
+else
+  echo "No files matching '*capn*' were found."
+fi
+
+#Remove Create 3 deb file if present
+echo "Removing Create 3 .deb file if present..."
+create3Deb=$(find /home/kipr -type f -iname "create3-0.1.0-Linux.deb" 2>/dev/null)
+if [ -n "$create3Deb"  ]; then
+  echo "Removing Create 3 deb file"
+  sudo rm /home/kipr/create3-0.1.0-Linux.deb
+fi
+
 # Copy Wombat Launcher to home directory
 TARGET=wombat-os/configFiles/wombat_launcher.sh
 echo "Copying the launcher"
