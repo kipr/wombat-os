@@ -55,7 +55,7 @@ if [ -n "$1" ]; then
       exit 1
     }
 
-    # Copy the contents of the extracted directory to $HOME/wombat-os
+    # Copy the contents of the extracted directory to /home/kipr/wombat-os
     cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
       echo "Failed to copy files, restoring old version"
       sudo rm -R wombat-os
