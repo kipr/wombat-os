@@ -1,10 +1,11 @@
 #!/bin/bash
 
 HOME=/home/kipr
-FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
+CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
+NEW_FW_VERSION=$(cat ../configFiles/board_fw_version.txt)
 
 echo "   "
-echo "Starting Wombat Update #$FW_VERSION"
+echo "Starting Wombat Update from #$CURRENT_FW_VERSION to #$NEW_FW_VERSION"
 echo "..."
 
 ###############################
