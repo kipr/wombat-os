@@ -36,7 +36,7 @@ if [ ! -d $HOME/wombat-os/updateFiles/pkgs ]; then
     exit 1
 else
     echo "Copying library .debs to /home/kipr/wombat-os/updateFiles/pkgs..."
-    cp pkgs/* $HOME/wombat-os/updateFiles/pkgs
+    sudo scp pkgs/* $HOME/wombat-os/updateFiles/pkgs
 fi
 
 
