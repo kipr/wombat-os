@@ -29,7 +29,7 @@ fi
 if [ -n "$1" ]; then
 
   #check if the argument is a .zip file containing updateFiles/wombat_update.sh
-  if [[ $1 == *.zip && -f "$1/*/updateFiles/wombat_update.sh" ]]; then
+  if [[ $1 == *.zip ]]; then
     temp_dir=$(mktemp -d)
 
     # Unzip into a temporary directory
@@ -40,17 +40,23 @@ if [ -n "$1" ]; then
       echo "Old version restored"
       exit 1
     }
+    # Find the extracted directory (only the first directory found)
+    extracted_dir=$(find "$temp_dir" -mindepth 1 -maxdepth 1 -type d -print -quit)
 
-    extracted_dir=$(find "$temp_dir" -mindepth 1 -maxdepth 1 -type d)
-
-    # Check if a directory was extracted
-    if [[ -z "$extracted_dir" ]]; then
-      echo "No directory found in the zip file. Aborting."
+    # Check if a directory was found and if wombat_update.sh exists in it
+    if [[ -z "$extracted_dir" || ! -f "$extracted_dir/updateFiles/wombat_update.sh" ]]; then
+      echo "No wombat_update.sh found in the zip file. Aborting."
       exit 1
     fi
 
+    # Make new wombat-os folder
+    mkdir /home/kipr/wombat-os || {
+      echo "Failed to make new wombat-os directory during USB update"
+      exit 1
+    }
+
     # Copy the contents of the extracted directory to $HOME/wombat-os
-    cp -r "$extracted_dir"/* "$HOME/wombat-os" || {
+    cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
       echo "Failed to copy files, restoring old version"
       sudo rm -R wombat-os
       sudo mv wombat-os-old wombat-os
