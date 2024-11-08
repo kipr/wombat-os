@@ -30,6 +30,16 @@ cd $HOME/wombat-os/updateFiles
 cp files/updateMe.sh $HOME
 sudo chmod u+x $HOME/updateMe.sh
 
+# Copy .debs to /home/kipr/wombat-os/updateFiles/pkgs
+if [ ! -d $HOME/wombat-os/updateFiles/pkgs ]; then
+    echo "/home/kipr/wombat-os/updateFiles/pkgs does not exist. Please swap the SD card."
+    exit 1
+else
+    echo "Copying library .debs to /home/kipr/wombat-os/updateFiles/pkgs..."
+    cp pkgs/* $HOME/wombat-os/updateFiles/pkgs
+fi
+
+
 
 # Change to configFiles directory and copy board_fw_version.txt to kipr share directory
 cd $HOME/wombat-os/configFiles
