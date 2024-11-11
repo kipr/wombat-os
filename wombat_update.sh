@@ -69,7 +69,7 @@ if [ -z "$extracted_dir" ] || [ ! -f "$extracted_dir/updateFiles/wombat_update.s
 fi
 
 # Copy the contents of the extracted directory to /home/kipr/wombat-os
-cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
+sudo cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
   echo "Failed to copy files, restoring old version"
   sudo rm -R wombat-os
   sudo mv wombat-os-old wombat-os
