@@ -2,7 +2,7 @@
 
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
-NEW_FW_VERSION=$(cat ../configFiles/board_fw_version.txt)
+NEW_FW_VERSION=$(cat configFiles/board_fw_version.txt)
 
 echo "   "
 echo "Starting Wombat Update from #$CURRENT_FW_VERSION to #$NEW_FW_VERSION"
@@ -37,13 +37,16 @@ mkdir /home/kipr/wombat-os || {
   exit 1
 }
 
-temp_dir = $(mktemp -d)
+temp_dir=$(mktemp -d)
+
 # Find all .zip files under /media/kipr and unzip them into $temp_dir
 zip_files=$(find /media/kipr/* -type f -name "*wombat-os*.zip")
 
+echo "Found zip files: $zip_files"
+
 if [ -n "$zip_files" ]; then
   for zip_file in $zip_files; do
-    unzip "$zip_file" -d "$temp_dir" || {
+    unzip -o "$zip_file" -d "$temp_dir" || {
       echo "Failed to unzip new wombat-os, restoring old version"
       sudo rm -R /home/kipr/wombat-os
       sudo mv /home/kipr/wombat-os-old /home/kipr/wombat-os
@@ -57,9 +60,10 @@ fi
 
 # Find the extracted directory (only the first directory found)
 extracted_dir=$(find "$temp_dir" -mindepth 1 -maxdepth 1 -type d -print -quit)
+echo "Extracted dir: $extracted_dir"
 
 # Check if a directory was found and if wombat_update.sh exists in it
-if [[ -z "$extracted_dir" || ! -f "$extracted_dir/updateFiles/wombat_update.sh" ]]; then
+if [ -z "$extracted_dir" ] || [ ! -f "$extracted_dir/updateFiles/wombat_update.sh" ]; then
   echo "No wombat_update.sh found in the zip file. Aborting."
   exit 1
 fi
@@ -74,3 +78,19 @@ cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
 }
 
 rm -rf "$temp_dir"
+
+echo "Wombat-os updated, running update script"
+
+# Change to updateFiles directory
+cd /home/kipr/wombat-os/updateFiles || {
+  echo "Failed to cd to updateFiles"
+  exit 1
+}
+
+# Run update script
+
+sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh || {
+  echo "Update Failed"
+  exit 1
+}
+
