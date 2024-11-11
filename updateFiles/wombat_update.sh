@@ -45,6 +45,10 @@ sudo cat interfaces_wifi.txt > /etc/network/interfaces
 # Copy new Wombat picture over old one
 sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 
+# Copy checkWiredConnection.service to /etc/systemd/system
+sudo cp checkWiredConnection.service /etc/systemd/system
+sudo systemctl enable checkWiredConnection.service
+
 ###############################
 #
 # update boot files
