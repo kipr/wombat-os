@@ -49,6 +49,9 @@ sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 sudo cp checkWiredConnection.service /etc/systemd/system
 sudo systemctl enable checkWiredConnection.service
 
+# Copy 
+
+
 ###############################
 #
 # update boot files
@@ -99,6 +102,10 @@ echo "Updating botui..."
 sudo rm -r /usr/local/bin/botui
 sudo dpkg -i pkgs/botui.deb
 
+#udhcpd
+echo "Updating udhcpd..."
+sudo dpkg -i pkgs/installs/udhcpd_arm64.deb
+
 cd $HOME
 
 ###############################
@@ -106,6 +113,11 @@ cd $HOME
 # edit misc files
 #
 ###############################
+
+# Copy udhcpd files to Wombat
+echo "Copying udhcpd files..."
+sudo cp $HOME/wombat-os/configFiles/udhcpd.conf /etc/udhcpd.conf
+sudo cp $HOME/wombat-os/configFiles/udhcpd /etc/default/udhcpd
 
 #Remove Create 3 Capn'Proto files from /
 echo "Removing Create 3 Capn'Proto files if present..."
