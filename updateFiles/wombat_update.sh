@@ -49,7 +49,8 @@ sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 sudo cp checkWiredConnection.service /etc/systemd/system
 sudo systemctl enable checkWiredConnection.service
 
-# Copy 
+# Give checkWiredConnection.sh execute permissions
+sudo chmod +x $HOME/wombat-os/configFiles/checkWiredConnection.sh
 
 
 ###############################
