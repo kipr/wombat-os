@@ -115,6 +115,9 @@ cd $HOME
 #
 ###############################
 
+#Making dynamicChannelSwitch.sh executable
+sudo chmod +x /home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh
+
 # Copy udhcpd files to Wombat
 echo "Copying udhcpd files..."
 sudo cp $HOME/wombat-os/configFiles/udhcpd.conf /etc/udhcpd.conf
