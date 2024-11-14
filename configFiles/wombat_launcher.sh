@@ -50,7 +50,7 @@ if [[ $elapsed_time -ge $TIMEOUT ]]; then
 fi
 
 # Run dynamicChannelSwitch.sh in the background
-/home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh &
+sudo /home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh &
 
 echo "[WOMBAT] Launching harrogate server.js and other scripts"
 export LD_LIBRARY_PATH=/usr/local/qt6/lib:/usr/local/lib
