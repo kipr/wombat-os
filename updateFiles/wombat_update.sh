@@ -141,7 +141,7 @@ if [ -n "$create3Deb"  ]; then
 fi
 
 # Copy Wombat Launcher to home directory
-TARGET=wombat-os/configFiles/wombat_launcher.sh
+TARGET=/home/kipr/wombat-os/configFiles/wombat_launcher.sh
 echo "Copying the launcher"
 sudo cp "$TARGET" "$HOME"
 sudo chmod 777 "$HOME/wombat_launcher.sh"
