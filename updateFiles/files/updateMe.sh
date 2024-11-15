@@ -102,7 +102,7 @@ cd /home/kipr/wombat-os/updateFiles || {
 echo "Update downloaded, running update script"
 
 # Run update script
-sudo chmod u+x wombat_update.sh && sudo ./home/kipr/wombat-os/updateFiles/wombat_update.sh || {
+sudo chmod u+x wombat_update.sh && sudo /home/kipr/wombat-os/updateFiles/wombat_update.sh || {
   echo "Update Failed"
   exit 1
 }
