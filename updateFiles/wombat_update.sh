@@ -50,7 +50,7 @@ sudo cp checkWiredConnection.service /etc/systemd/system
 sudo systemctl enable checkWiredConnection.service
 
 # Give checkWiredConnection.sh execute permissions
-sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection.sh
+sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnect.sh
 
 
 ###############################
