@@ -14,6 +14,7 @@ if [ -d "wombat-os-old" ]; then
     echo "Failed to remove old wombat-os"
     exit 1
   }
+  echo "Old wombat-os removed"
 fi
 
 # Remove directory if it exists
@@ -64,6 +65,8 @@ if [ -n "$1" ]; then
       exit 1
     }
 
+    echo ".zip file extracted to /home/kipr/wombat-os"
+
     # Clean up the temporary directory
     rm -rf "$temp_dir"
   else
@@ -99,7 +102,7 @@ cd /home/kipr/wombat-os/updateFiles || {
 echo "Update downloaded, running update script"
 
 # Run update script
-sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh || {
+sudo chmod u+x wombat_update.sh && sudo ./home/kipr/wombat-os/updateFiles/wombat_update.sh || {
   echo "Update Failed"
   exit 1
 }
