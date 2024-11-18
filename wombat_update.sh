@@ -31,11 +31,6 @@ if [ -d $WOMBAT_OS ]; then
   }
 fi
 
-# Make new wombat-os folder
-mkdir /home/kipr/wombat-os || {
-  echo "Failed to make new wombat-os directory during USB update"
-  exit 1
-}
 
 temp_dir=$(mktemp -d)
 
@@ -68,6 +63,12 @@ if [ -z "$extracted_dir" ] || [ ! -f "$extracted_dir/updateFiles/wombat_update.s
   exit 1
 fi
 
+# Make new wombat-os folder
+mkdir /home/kipr/wombat-os || {
+  echo "Failed to make new wombat-os directory during USB update"
+  exit 1
+}
+
 # Copy the contents of the extracted directory to /home/kipr/wombat-os
 sudo cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
   echo "Failed to copy files, restoring old version"
@@ -77,7 +78,7 @@ sudo cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
   exit 1
 }
 
-rm -rf "$temp_dir"
+#rm -rf "$temp_dir"
 
 echo "Wombat-os updated, running update script"
 
