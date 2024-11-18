@@ -31,54 +31,29 @@ if [ -d $WOMBAT_OS ]; then
   }
 fi
 
+WOMBAT_OS="wombat-os"
+WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-31Update -maxdepth 0 -type d 2>/dev/null)
 
-temp_dir=$(mktemp -d)
-
-# Find all .zip files under /media/kipr and unzip them into $temp_dir
-zip_files=$(find /media/kipr/* -type f -name "*wombat-os*.zip")
-
-echo "Found zip files: $zip_files"
-
-if [ -n "$zip_files" ]; then
-  for zip_file in $zip_files; do
-    unzip -o "$zip_file" -d "$temp_dir" || {
-      echo "Failed to unzip new wombat-os, restoring old version"
-      sudo rm -R /home/kipr/wombat-os
-      sudo mv /home/kipr/wombat-os-old /home/kipr/wombat-os
-      echo "Old version restored"
-      exit 1
-    }
-  done
-else
-  echo "No zip files found."
-fi
-
-# Find the extracted directory (only the first directory found)
-extracted_dir=$(find "$temp_dir" -mindepth 1 -maxdepth 1 -type d -print -quit)
-echo "Extracted dir: $extracted_dir"
-
-# Check if a directory was found and if wombat_update.sh exists in it
-if [ -z "$extracted_dir" ] || [ ! -f "$extracted_dir/updateFiles/wombat_update.sh" ]; then
-  echo "No wombat_update.sh found in the zip file. Aborting."
+if [ -z "$WOMBAT_OS_NEW" ]; then
+  echo "No wombat-os-31Update directory found"
   exit 1
 fi
 
-# Make new wombat-os folder
-mkdir /home/kipr/wombat-os || {
-  echo "Failed to make new wombat-os directory during USB update"
+if [ $(echo "$WOMBAT_OS_NEW" | wc -l) -ne 1 ]; then
+  echo "Multiple matches found for wombat-os-31Update. Please specify the correct path."
+  exit 1
+fi
+
+# Copy the new directory to /home/kipr and rename it
+sudo cp -r "$WOMBAT_OS_NEW" /home/kipr/"$WOMBAT_OS" || {
+  echo "Failed to copy $WOMBAT_OS_NEW to /home/kipr/$WOMBAT_OS"
+  if [ -d "${WOMBAT_OS}-old" ]; then
+    sudo mv "${WOMBAT_OS}-old" "$WOMBAT_OS" # Restore the original directory if copy fails
+  fi
   exit 1
 }
 
-# Copy the contents of the extracted directory to /home/kipr/wombat-os
-sudo cp -r "$extracted_dir"/* "/home/kipr/wombat-os" || {
-  echo "Failed to copy files, restoring old version"
-  sudo rm -R wombat-os
-  sudo mv wombat-os-old wombat-os
-  echo "Old version restored"
-  exit 1
-}
 
-#rm -rf "$temp_dir"
 
 echo "Wombat-os updated, running update script"
 
@@ -90,7 +65,7 @@ cd /home/kipr/wombat-os/updateFiles || {
 
 # Run update script
 
-sudo chmod u+x wombat_update.sh && sudo ./wombat_update.sh || {
+sudo chmod u+x wombat_update.sh && sudo /home/kipr/wombat-os/updateFiles/wombat_update.sh || {
   echo "Update Failed"
   exit 1
 }
