@@ -17,6 +17,8 @@ exec &> >(tee -a "$LOGFILE") # Use tee to see output in terminal and log
 
 echo "[DEBUG] Script started"
 
+sudo systemctl restart udhcpd.service
+
 echo "[WOMBAT] Launching botui GUI first"
 # Run botui in the foreground (this will block the script until botui finishes)
 sudo /usr/local/bin/botui &
@@ -54,7 +56,7 @@ sudo /home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh &
 
 echo "[WOMBAT] Launching harrogate server.js and other scripts"
 export LD_LIBRARY_PATH=/usr/local/qt6/lib:/usr/local/lib
-sudo systemctl restart udhcpd.service
+
 
 # Run harrogate server.js in the background
 cd harrogate
