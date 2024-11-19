@@ -45,7 +45,7 @@ WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-31Update -maxdepth 0 -type d 2>/dev
 
 # Check if wombat-os-31Update directory exists
 if [ -z "$WOMBAT_OS_NEW" ]; then
-  echo "No wombat-os-31Update directory found"
+  echo "No wombat-os-31Update directory found. If you downloaded wombat-os v31.0.0, please make sure the folder is named 'wombat-os-31Update'."
   exit 1
 fi
 
