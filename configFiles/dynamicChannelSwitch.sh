@@ -3,17 +3,16 @@
 #######################################################################################################
 #																								   																		                #
 #		Author: Erin Harrington, Tim Corbly																																#
-#		Date: 2024-11-09																																							    #								
+#		Date: 2024-11-19																																							    #
 #		Description: Dynamic Wifi band and channel switching script for Wombat, executes on bootup        #
-#																																																			#							
+#																																																			#
 #######################################################################################################
-
 
 # Get Wombat Raspberry Pi type (3B or 3B+)
 WOMBAT_TYPE=$(awk '/Revision/ {print $3}' /proc/cpuinfo)
 
 # Get AP connection name (####-wombat)
-CONNECTION_NAME=$(nmcli -t -f NAME connection show --active | awk '/-wombat/') 
+CONNECTION_NAME=$(nmcli -t -f NAME connection show --active | awk '/-wombat/')
 
 # Get current WiFi band and channel
 CONNECTION_DETAILS=$(nmcli -f 802-11-wireless.band,802-11-wireless.channel connection show $CONNECTION_NAME)
@@ -108,7 +107,6 @@ switch_band_channel() {
 		return 1
 	fi
 
-
 	if [ "$CURRENT_WIFI_CHANNEL" != "$changeChannel" ]; then
 		nmcli connection modify $CONNECTION_NAME 802-11-wireless.band $changeBand 802-11-wireless.channel $changeChannel
 		nmcli connection down $CONNECTION_NAME
@@ -116,14 +114,6 @@ switch_band_channel() {
 		sleep 2
 		nmcli radio wifi on
 		nmcli connection up $CONNECTION_NAME
-	fi
-
-	echo "New Band: $new_band with New Channel: $new_channel"
-
-	# Verify if the new band/channel is applied
-	if [ "$new_band" != "$changeBand" ] || [ "$new_channel" != "$changeChannel" ]; then
-		echo "Error: Failed to switch to the new band/channel."
-		return 1
 	fi
 
 	return 0
@@ -167,18 +157,15 @@ find_best_channel() {
 		fi
 	done
 
-	#echo "Best channel found: $best_channel with an average of $min_aps APs."
 	echo "$best_channel $min_aps"
 
 }
 
 # Function to count APs in parallel for each channel
 count_aps_in_parallel() {
-    local channel=$1
-    average_aps "$channel" &
+	local channel=$1
+	average_aps "$channel" &
 }
-
-
 
 # Main driver code
 get_channels
@@ -297,9 +284,22 @@ case $WOMBAT_TYPE in
 "a02082" | "a22082" | "a32082" | "a52082" | "a22083")
 	echo "Wombat is a 3B"
 	echo "Current ap count on channel $current_channel: $current_ap_count"
-	if [ "$current_ap_count" -ge "$MAX_APS" ]; then
-		echo "Maximum number of APs reached. Searching for a better channel..."
-		find_best_channel
+
+	echo "Checking all 2.4 GHz channels..."
+	result=$(find_best_channel)
+	echo "Result from find_best_channel: $result"
+
+	check_best_channel=$(echo "$result" | tail -n 1 | awk '{print $1}')
+	checked_min_aps=$(echo "$result" | tail -n 1 | awk '{print $2}')
+	echo "Returned best channel: $check_best_channel with minimum APs: $checked_min_aps"
+
+	echo "Setting to best channel: $check_best_channel"
+
+	if switch_band_channel "bg" "$check_best_channel"; then
+		echo "Switched to channel $check_best_channel on 2.4GHz band."
+		exit 0
+	else
+		echo "Error: Failed to switch to band 'bg' with channel $check_best_channel."
 	fi
 
 	;;
