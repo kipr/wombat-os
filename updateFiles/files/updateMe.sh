@@ -1,5 +1,15 @@
 #! /bin/bash
 
+#######################################################################################################
+#																								   																		                #
+#		Author: Erin Harrington, Tim Corbly																																#
+#		Date: 2024-11-19						                                                                		  #
+#   Arguments: None for ethernet update, .zip file path for USB update																#																	    #								
+#		Description: Update file looked for by Botui when running USB or ethernet update                  #
+#																																																			#							
+#######################################################################################################
+
+
 echo "Starting Wombat Update"
 
 # Change to home directory

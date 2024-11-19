@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#######################################################################################################
+#																								   																		                #
+#		Author: Tim Corbly, Erin Harrington																																#
+#		Date: 2024-11-19																																							    #								
+#		Description: Dummy Wombat update file for versions <= 30.3.0                                      #
+#																																																			#							
+#######################################################################################################
+
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
 NEW_FW_VERSION=$(cat configFiles/board_fw_version.txt)
@@ -31,14 +39,17 @@ if [ -d $WOMBAT_OS ]; then
   }
 fi
 
+
 WOMBAT_OS="wombat-os"
 WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-31Update -maxdepth 0 -type d 2>/dev/null)
 
+# Check if wombat-os-31Update directory exists
 if [ -z "$WOMBAT_OS_NEW" ]; then
   echo "No wombat-os-31Update directory found"
   exit 1
 fi
 
+# Check if only one directory was found
 if [ $(echo "$WOMBAT_OS_NEW" | wc -l) -ne 1 ]; then
   echo "Multiple matches found for wombat-os-31Update. Please specify the correct path."
   exit 1
@@ -52,7 +63,6 @@ sudo cp -r "$WOMBAT_OS_NEW" /home/kipr/"$WOMBAT_OS" || {
   fi
   exit 1
 }
-
 
 
 echo "Wombat-os updated, running update script"

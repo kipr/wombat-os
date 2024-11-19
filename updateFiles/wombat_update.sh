@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#######################################################################################################
+#																								   																		                #
+#		Author: Tim Corbly, Erin Harrington																																#
+#		Date: 2024-11-19																																							    #								
+#		Description: True Wombat update file in versions >= 31.0.0                                        #
+#																																																			#							
+#######################################################################################################
+
+
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
 NEW_FW_VERSION=$(cat ../configFiles/board_fw_version.txt)
