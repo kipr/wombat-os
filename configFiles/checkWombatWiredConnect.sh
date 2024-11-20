@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#check if static eth0 connection "wired_wombat" exists, if not, create it
+# Check if static eth0 connection "wired_wombat" exists, if not, create it
 
 if nmcli connection show | grep "wired_wombat"; then
   echo "wired_wombat connection exists"
@@ -19,68 +19,50 @@ else
   fi
 fi
 
-#remove any static IPs that are up
-if nmcli connection show --active | grep wired_wombat; then
-  echo "Connection wired_wombat is up"
-  echo "Closing down wired_wombat"
-  nmcli connection down wired_wombat
-
+#check if auto router eth0 connection "router_dhcp" exists, if not, create it
+if nmcli connection show | grep "router_dhcp"; then
+  echo "router_dhcp connection exists"
 else
-  echo "Connection wired_wombat is down"
+  echo "router_dhcp connection does not exists"
+  echo "Creating now..."
+  nmcli connection add type ethernet con-name router_dhcp ifname eth0 ipv4.method auto
+  nmcli connection modify router_dhcp connection.autoconnect yes
+  echo "router_dhcp created"
+  echo "Rechecking if router_dhcp exists..."
+  if nmcli connection show | grep "router_dhcp"; then
+    echo "Created router_dhcp and exists!"
+    sudo systemctl restart udhcpd.service
+  else
+    echo "Creating router_dhcp failed"
+  fi
 fi
 
-while true; do # (controller on)
 
-  if ethtool eth0 | grep -q "Link detected: yes"; then #Ethernet cable connected
+while true; do
+  # Detect Ethernet connection status
+  if ethtool eth0 | grep -q "Link detected: yes"; then
     echo "Ethernet link detected"
 
-    #check for auto IP assingment
+    # Check for an existing IP address on eth0
     ETH_ADDRESS=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-    echo $ETH_ADDRESS
 
-    #Computer
-    if [[ "$ETH_ADDRESS" == "" ]]; then
-      echo "Connected ethernet to computer"
-      nmcli connection up wired_wombat
-      while true; do
-        if ethtool eth0 | grep -q "Link detected: yes"; then
-          echo "Ethernet cable is connected, connected to computer"
-          if ping -c 1 192.168.124.2 >/dev/null; then
-            echo "Connection to 192.168.124.2 (computer) is solid"
-          else
-            echo "Failed to connect to 192.168.124.2 (computer)"
-            echo "Restarting udhcpd.service..."
-            sudo systemctl restart udhcpd.service
-          fi
-        else
-          echo "Ethernet cable is not connected"
-          break
-        fi
-        sleep 3
-
-      done
-      nmcli connection down wired_wombat
-
-      #Router
-
-    elif [[ "$ETH_ADDRESS" != "192.168.124.1" ]]; then
-      echo "Connected ethernet to router"
-      while true; do
-        if ethtool eth0 | grep -q "Link detected: yes"; then
-          echo "Ethernet cable is connected"
-        else
-          echo "Ethernet cable is not connected"
-          break
-        fi
-        sleep 3
-      done
-    fi
+    if [[ "$ETH_ADDRESS" == "192.168.124.1" ]]; then
+    echo "Static IP detected; maintaining wired_wombat profile"
+    # Do nothing or explicitly ensure wired_wombat is up
+elif [[ "$ETH_ADDRESS" == "" ]]; then
+    echo "No IP address; activating static profile"
+    nmcli connection up wired_wombat
+else
+    echo "IP address detected; activating DHCP profile"
+    nmcli connection down wired_wombat
+    nmcli connection up router_dhcp
+fi
 
   else
-    #Ethernet cable not detected
-    echo "No Ethernet link detected"
-
+    echo "No Ethernet link detected; deactivating both profiles"
+    nmcli connection down wired_wombat
   fi
 
-  sleep 3
+  # Sleep for a few seconds to avoid excessive CPU usage
+  sleep 5
 done

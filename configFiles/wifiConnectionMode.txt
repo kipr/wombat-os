@@ -3,4 +3,4 @@
 # OFF 2
 
 MODE 0
-EVENT_MODE true
+EVENT_MODE false
