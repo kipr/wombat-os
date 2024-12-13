@@ -1,8 +1,12 @@
-BOOT0="/sys/class/gpio/gpio17"
-RST="/sys/class/gpio/gpio23"
+#!/bin/bash
 
+BOOT0=17
+RST=23
+GPIOCHIP=0
 
-echo "resetting co processor..."
-echo 1 > $RST/value
-echo 0 > $RST/value
-echo 1 > $RST/value
+echo "resetting co-processor..."
+
+# Toggle RST: 1 -> 0 -> 1
+gpioset gpiochip${GPIOCHIP} ${RST}=1
+gpioset gpiochip${GPIOCHIP} ${RST}=0
+gpioset gpiochip${GPIOCHIP} ${RST}=1
