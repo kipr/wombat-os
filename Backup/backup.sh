@@ -14,7 +14,7 @@ fi
 
 echo -e "Copying Users and Projects to USB Drive...\n"
 
-cp -r /home/kipr/Documents/KISS/* "USB_FOLDER"
+cp -r /home/kipr/Documents/KISS/* "$USB_FOLDER"
 
 sudo umount /dev/sd??
 
