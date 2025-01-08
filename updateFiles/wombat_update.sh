@@ -116,11 +116,6 @@ sudo dpkg -i pkgs/botui.deb
 echo "Updating udhcpd..."
 sudo dpkg -i pkgs/installs/udhcpd_arm64.deb
 
-# libgpio
-echo "Installing libgpio"
-sudo dpkg -i pkgs/installs/libgpiod-dev_1.6.2-1_arm64.deb
-sudo dpkg -i pkgs/installs/libgpiod2_1.6.2-1_arm64.deb
-
 cd $HOME
 
 ###############################
