@@ -1,38 +1,34 @@
+                                                                
 #!/bin/bash
 
-echo -e "Mounting USB drive... \n"
-sudo mount /dev/sd?? /mnt
-cd /mnt
-sudo chmod -R 777 /home/kipr/Documents/KISS
-echo -e "Moving projects from flash drive to the Controller... \n"
-for dir in *; do
-    if [ -d "$dir" ]; then
-        echo "Possible User: $dir"
-        cd "$dir"
-        for subdir in *; do
-            if [ -d "$subdir" ]; then
-                echo "Possible Project: $subdir"
-                source="$subdir/src"
-                if [ -d "$source" ]; then
-                    echo "$subdir project confirmed. Restoring Project..."
-                    user="/home/kipr/Documents/KISS/$dir"
-                    if [ ! -d "$user" ]; then
-                        echo "User not found on Wombat. Creating $user"
-                        mkdir "$user"
-                    fi
-                    cp -r "$subdir" "$user/$subdir"
-                fi
-            fi
-        done
-        cd ..
+# Mount the USB drive
+#sudo mount /dev/sd?? /mnt
+
+# Define backup folder on the USB and restore location on the computer
+BACKUP_FOLDER="Backed_Up_Projects"
+USB_FOLDER="/mnt/$BACKUP_FOLDER"
+RESTORE_FOLDER="/home/kipr/Documents/KISS"
+
+# Check if the backup folder exists on the USB
+if [ -d "$USB_FOLDER" ]; then
+    echo "Found backup folder on USB: $USB_FOLDER"
+    
+    # Ensure the restore directory exists
+    if [ ! -d "$RESTORE_FOLDER" ]; then
+        echo "Creating restore folder: $RESTORE_FOLDER"
+        mkdir -p "$RESTORE_FOLDER"
     fi
-done
 
-echo -e "\nCopying users.json to /home/kipr/Documents/KISS..."
-sudo scp users.json /home/kipr/Documents/KISS
+    # Copy files from USB backup folder to restore location
+    echo -e "Restoring files to: $RESTORE_FOLDER\n"
+    cp -r "$USB_FOLDER"/* "$RESTORE_FOLDER"
 
-cd /home/kipr/Documents/KISS
+    echo -e "\nFiles successfully restored!"
+else
+    echo "Error: Backup folder not found on USB: $USB_FOLDER"
+fi
 
+# Unmount the USB drive
 sudo umount /dev/sd??
-echo -e "\n \nAll programs restored with USB flash drive \n"
-echo -e "If you do not see a user on the list create the user for their programs to show up \n"
+
+echo -e "\nRestore process complete!\n"
