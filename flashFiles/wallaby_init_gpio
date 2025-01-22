@@ -1,8 +1,14 @@
-BOOT0="/sys/class/gpio/gpio17"
-RST="/sys/class/gpio/gpio23"
+#!/bin/bash
 
-echo 17 > /sys/class/gpio/export
-echo 23 > /sys/class/gpio/export
+# GPIO numbers
+BOOT0=17
+RST=23
+GPIOCHIP=0
 
-echo "out" > $BOOT0/direction
-echo "out" > $RST/direction
+echo "Initializing GPIOs..."
+
+# Initialize BOOT0 to low
+gpioset gpiochip${GPIOCHIP} ${BOOT0}=0
+
+# Initialize RST to high
+gpioset gpiochip${GPIOCHIP} ${RST}=1
