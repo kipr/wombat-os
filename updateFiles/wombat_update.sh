@@ -47,6 +47,7 @@ if [ ! -d /usr/share/kipr ]; then
 fi
 
 sudo scp board_fw_version.txt /usr/share/kipr/
+sudo scp board_copyright_year.txt /usr/share/kipr/
 sudo scp journald.conf /etc/systemd/journald.conf
 sudo cat interfaces_wifi.txt > /etc/network/interfaces
 
