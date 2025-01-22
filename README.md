@@ -3,7 +3,7 @@ The Wombat OS repository contains all files needed for building up a Wombat from
 
 # Required Packages
 The current required packages for building the Wombat are below:
-- [botui (v1.2.1)](https://github.com/kipr/botui/releases/tag/v1.2.1)
+- [botui (v1.2.2)](https://github.com/kipr/botui/releases/tag/v1.2.2)
 - [libkar (v1.0.0)](https://github.com/kipr/libkar/releases/tag/v1.0.0)
 - [libwallaby (v1.2.0)](https://github.com/kipr/libwallaby/releases/tag/v1.2.0)
 - [pcompiler (v1.0.0)](https://github.com/kipr/pcompiler/releases/tag/v1.0.0)
