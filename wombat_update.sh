@@ -3,7 +3,7 @@
 #######################################################################################################
 #																								   																		                #
 #		Author: Tim Corbly, Erin Harrington																																#
-#		Date: 2024-11-19																																							    #								
+#		Date: 2025-01-24																																							    #								
 #		Description: Dummy Wombat update file for versions <= 30.3.0                                      #
 #																																																			#							
 #######################################################################################################
@@ -41,11 +41,17 @@ fi
 
 
 WOMBAT_OS="wombat-os"
-WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-31.0.0 -maxdepth 0 -type d 2>/dev/null)
+WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-* -maxdepth 0 -type d -name 'wombat-os-*' 2>/dev/null | \
+awk -F'wombat-os-' '
+{
+    split($2, ver, "."); 
+    if (ver[1] >= 31 && ver[2] >= 0 && ver[3] >= 0) 
+        print $0
+}')
 
-# Check if wombat-os-31.0.0 directory exists
+# Check if wombat-os-31.0.0 or greater directory exists
 if [ -z "$WOMBAT_OS_NEW" ]; then
-  echo "No wombat-os-31Update directory found. If you downloaded wombat-os v31.0.0, please make sure the folder is named 'wombat-os-31Update'."
+  echo "No wombat-os-31.0.0 or higher directory found. If you downloaded wombat-os v31.0.0 or higher, please make sure that the file has been extracted to your flash drive and that there is not a duplicate folder inside the extracted folder."
   exit 1
 fi
 
@@ -79,4 +85,3 @@ sudo chmod u+x wombat_update.sh && sudo /home/kipr/wombat-os/updateFiles/wombat_
   echo "Update Failed"
   exit 1
 }
-
