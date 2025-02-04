@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #######################################################################################################
-#																								   																		                #
-#		Author: Tim Corbly, Erin Harrington																																#
-#		Date: 2025-01-24																																							    #								
-#		Description: Dummy Wombat update file for versions <= 30.3.0                                      #
-#																																																			#							
+#                                                                                                     #
+#    Author: Tim Corbly, Erin Harrington, Thomas Wells                                                #
+#    Date: 2025-02-04                                                                                 #
+#    Description: Dummy Wombat update file for versions <= 30.3.0                                     #
+#                                                                                                     #
 #######################################################################################################
 
 HOME=/home/kipr
@@ -47,17 +47,11 @@ awk -F'wombat-os-' '
     split($2, ver, "."); 
     if (ver[1] >= 31 && ver[2] >= 0 && ver[3] >= 0) 
         print $0
-}')
+}' | sort | tail -n1)
 
 # Check if wombat-os-31.0.0 or greater directory exists
 if [ -z "$WOMBAT_OS_NEW" ]; then
   echo "No wombat-os-31.0.0 or higher directory found. If you downloaded wombat-os v31.0.0 or higher, please make sure that the file has been extracted to your flash drive and that there is not a duplicate folder inside the extracted folder."
-  exit 1
-fi
-
-# Check if only one directory was found
-if [ $(echo "$WOMBAT_OS_NEW" | wc -l) -ne 1 ]; then
-  echo "Multiple matches found for wombat-os-31Update. Please specify the correct path."
   exit 1
 fi
 
