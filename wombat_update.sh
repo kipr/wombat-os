@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #######################################################################################################
-#																								   																		                #
-#		Author: Tim Corbly, Erin Harrington																																#
-#		Date: 2025-01-24																																							    #
-#		Description: Dummy Wombat update file for versions <= 30.3.0                                      #
-#																																																			#
+#                                                                                                     #
+#    Author: Tim Corbly, Erin Harrington, Thomas Wells                                                #
+#    Date: 2025-02-04                                                                                 #
+#    Description: Dummy Wombat update file for versions <= 30.3.0                                     #
+#                                                                                                     #
 #######################################################################################################
 
 HOME=/home/kipr
