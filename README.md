@@ -10,6 +10,6 @@ The current required packages for building the Wombat are below:
 - [harrogate (v1.0.1)](https://github.com/kipr/harrogate/releases/tag/v1.0.1)
 
 # Image
-The Wombat is on v31.1.0. An image for flashing an SD card can be found below:
+The Wombat is on v31.1.1. An image for flashing an SD card can be found below:
 
-[Wombat v31.1.0 Image](http://files.kipr.org/wombat/Wombat_v31.1.0.img)
+[Wombat v31.1.0 Image](http://files.kipr.org/wombat/Wombat_v31.1.1.img)
