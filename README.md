@@ -12,4 +12,4 @@ The current required packages for building the Wombat are below:
 # Image
 The Wombat is on v31.1.2.
 
-[Wombat v31.1.1 Image](http://files.kipr.org/wombat/Wombat_v31.1.2.img)
+[Wombat v31.1.2 Image](http://files.kipr.org/wombat/Wombat_v31.1.2.img)
