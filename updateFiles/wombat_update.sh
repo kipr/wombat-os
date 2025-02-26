@@ -180,7 +180,7 @@ sudo chmod -R 777 "$CP_TARGET" || echo "Failed to chmod Default Programs"
 
 echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
-sudo chmod +x wallaby_flash wallaby_get_id.sh wallaby_set_serial.sh
+sudo chmod +x *
 sudo ./wallaby_flash
 
 echo "Letting harrogate finish gulping"
