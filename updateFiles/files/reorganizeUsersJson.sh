@@ -40,7 +40,7 @@ voldigateJson=$(printf '%s\n' "${user_array[@]}" | "$JQ" -Rn '
 
 #Make sure current users.json doesn't have trailing , (v31.1.2)
 perl -pe 's/,\s*}/}/g' /home/kipr/Documents/KISS/users.json \
-  | jq . > /home/kipr/Documents/KISS/users.json.fixed
+  |  "$JQ" . > /home/kipr/Documents/KISS/users.json.fixed
 
 sudo mv /home/kipr/Documents/KISS/users.json.fixed /home/kipr/Documents/KISS/users.json
 
