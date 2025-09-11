@@ -1,7 +1,7 @@
 #!/bin/bash
-#Bash script to launch harrogate web IDE and botui GUI
+#Bash script to launch voldigate web IDE and botui GUI
 #created 23 May 2023
-#edited 9 October 2024
+#edited 11 September 2025
 
 LOGFILE="/var/log/wombat_launcher.log"
 
@@ -54,13 +54,13 @@ fi
 # Run dynamicChannelSwitch.sh in the background
 sudo /home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh &
 
-echo "[WOMBAT] Launching harrogate server.js and other scripts"
+echo "[WOMBAT] Launching voldigate express.js and other scripts"
 export LD_LIBRARY_PATH=/usr/local/qt6/lib:/usr/local/lib
 
 
-# Run harrogate server.js in the background
-cd harrogate
-sudo node server.js &
+# Run voldigate express.js in the background
+cd /opt/voldigate-slim-wombat
+sudo node express.js &
 
 # Launch firstTimeScreen.sh in the background
 /home/kipr/wombat-os/configFiles/firstTimeScreen.sh &
