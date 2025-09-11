@@ -97,6 +97,7 @@ mount -o remount,rw /
 ###############################
 
 # voldigate
+cd $HOME/wombat-os/updateFiles
 bash ./files/voldigate_update.sh
 
 # libkar
