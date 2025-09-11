@@ -13,9 +13,9 @@ OLD_USER_JSON="/home/kipr/Documents/KISS/users.json"
 NEW_USER_JSON="/home/kipr/Documents/KISS/newUsers.json"
 HOME_DIR="/home/kipr/Documents/KISS"
 SCRIPT_DIR="$(dirname "$0")"
-JQ="../pkgs/jq-linux64" #jq-linux64 testing on computer, pkgs/jq-linux-arm64 for pi once ready
+#JQ="../pkgs/jq-linux64" #jq-linux64 testing on computer, pkgs/jq-linux-arm64 for pi once ready
 sudo cp ../pkgs/jq-linux-arm64 /usr/local/bin/jq
-#sudo chmod +x /usr/local/bin/jq
+sudo chmod +x /usr/local/bin/jq
 JQ=/usr/local/bin/jq
 # Get all directories stored in /home/kipr/Documents/KISS - Users
 for dir in "$HOME_DIR"/*; do
