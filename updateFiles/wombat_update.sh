@@ -187,8 +187,6 @@ cd /home/kipr/wombat-os/flashFiles
 sudo chmod +x *
 sudo ./wallaby_flash
 
-echo "Letting harrogate finish gulping"
-sleep 70
 
 
 ###############################
