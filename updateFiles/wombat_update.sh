@@ -29,6 +29,23 @@ if [ ! -f /usr/share/kipr/board_fw_version.txt ]; then
     exit 1
 fi
 
+#####################################
+#
+# Clean up unneeded files for space
+#
+#####################################
+echo "Cleaning up space..."
+
+sudo rm -rf /var/cache/apt/archives/*
+sudo rm -rf /tmp/*
+rm -rf ~/.cache/*
+rm -rf ~/.npm
+rm -rf ~/.node-gyp
+sudo rm -rf /usr/share/doc/*
+sudo rm -rf /usr/share/man/*
+sudo rm -rf /usr/share/locale/*
+
+
 ###############################
 #
 # Move update files
@@ -79,22 +96,8 @@ mount -o remount,rw /
 #
 ###############################
 
-# harrogate
-echo "Updating harrogate..."
-cd $HOME/wombat-os/updateFiles
-sudo rm -r $HOME/harrogate
-sudo tar -C $HOME -zxvf pkgs/harrogate.tar.gz
-sudo chmod -R 777 /home/kipr/harrogate
-echo "Installing harrogate dependencies..."
-cd $HOME/harrogate
-npm install browserfy
-npm install
-sudo npm install -g gulp@4 gulp-cli
-echo "Killing any running harrogate processes..."
-sudo killall node
-echo "Starting harrogate..."
-sudo gulp &
-cd $HOME/wombat-os/updateFiles
+# voldigate
+bash ./files/voldigate_update.sh
 
 # libkar
 echo "Updating libkar..."
