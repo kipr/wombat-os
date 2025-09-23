@@ -1,0 +1,12 @@
+[Unit]
+Description=BotUI
+After=graphical-session.target
+Wants=udhcpcd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/botui
+Restart=on-failure
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/home/kipr/.Xauthority"
+WorkingDirectory=/home/kipr

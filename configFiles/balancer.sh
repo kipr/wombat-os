@@ -1,7 +1,5 @@
 #!/bin/sh
 
-exec >/var/log/balancer.log
-
 tag="[BALANCER]"
 max_retries="10"
 
@@ -21,7 +19,7 @@ cleanup() {
 	# Re-enable connection
 	ct="0"
 	while [ "${ct}" -lt "${max_retries}" ] && (! nmcli -t -f GENERAL.STATE connection show "${ap_name}" | grep -q 'activated'); do
-		echo "${tag} Attempting to bring connection ${ap_name} up ({$ct})"
+		echo "${tag} Attempting to bring connection ${ap_name} up (${ct})"
 		nmcli connection up "${ap_name}"
 		ct="$((ct + 1))"
 		sleep 1
@@ -76,11 +74,12 @@ scan() {
 	done
 }
 all="$(scan | awk '/primary channel:/{print $NF}')"
+sorted="$(echo "${all}" | sort -u)"
 echo "ALL:"
-echo "${all}" | sort -u
+echo "${sorted}"
 
 # Check if there are unoccupied allowed channels
-empty_channels="$(echo "${all}" | sort -u | comm -23 "${allowed}" -)"
+empty_channels="$(echo "${sorted}" | comm -23 "${allowed}" -)"
 echo "EMPTY:"
 echo "${empty_channels}"
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Voldigate Node.js Server
+After=network.target
+Wants=network.target
+After=botui.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/kipr/harrogate
+ExecStart=node server.js
+Restart=on-failure

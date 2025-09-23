@@ -1,13 +1,12 @@
 #!/bin/bash
 
 #######################################################################################################
-#																								   																		                #
-#		Author: Tim Corbly, Erin Harrington																																#
-#		Date: 2024-11-19																																							    #								
-#		Description: True Wombat update file in versions >= 31.0.0                                        #
-#																																																			#							
+#                                                                                                     #
+#       Authors: Tim Corbly, Erin Harrington, Thomas Wells                                            #
+#       Date: 2025-09-24                                                                              #
+#       Description: True Wombat update file in versions >= 31.0.0                                    #
+#                                                                                                     #
 #######################################################################################################
-
 
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
@@ -46,22 +45,36 @@ if [ ! -d /usr/share/kipr ]; then
     sudo mkdir /usr/share/kipr
 fi
 
-sudo scp board_fw_version.txt /usr/share/kipr/
-sudo scp board_copyright_year.txt /usr/share/kipr/
-sudo scp journald.conf /etc/systemd/journald.conf
+sudo cp board_fw_version.txt /usr/share/kipr/
+sudo cp board_copyright_year.txt /usr/share/kipr/
+sudo cp journald.conf /etc/systemd/journald.conf
 sudo cat interfaces_wifi.txt > /etc/network/interfaces
-
 
 # Copy new Wombat picture over old one
 sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 
 # Copy checkWiredConnection.service to /etc/systemd/system
-sudo cp checkWiredConnection.service /etc/systemd/system
-sudo systemctl enable checkWiredConnection.service
+sudo cp balancer.service checkWiredConnection.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable checkWiredConnection.service balancer.service
 
 # Give checkWombatWiredConnect.sh execute permissions
-sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnect.sh
+sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balancer.sh
 
+# Set up systemd services as replacement for old wombat_launcher
+mkdir -p /home/kipr/.config/systemd/user
+cp botui.service first-time-screen.service harrogate.service wombat.target /home/kipr/.config/systemd/user/
+sudo chown -R kipr:kipr /home/kipr/.config
+# Make sure these commands run as kipr user
+# TODO: More granular permissions instead of just sudoing everywhere
+export XDG_RUNTIME_DIR="/run/user/1000"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+sudo -E -u kipr systemctl --user daemon-reload
+sudo -E -u kipr systemctl --user enable wombat.target
+
+# Remove old xdg-autostart file
+sudo rm /etc/xdg/autostart/botui.desktop
+sudo rm /home/kipr/wombat_launcher.sh
 
 ###############################
 #
@@ -132,7 +145,7 @@ cd $HOME
 ###############################
 
 #Making dynamicChannelSwitch.sh executable
-sudo chmod +x /home/kipr/wombat-os/configFiles/dynamicChannelSwitch.sh
+sudo chmod +x /home/kipr/wombat-os/configFiles/balancer.sh
 
 # Copy udhcpd files to Wombat
 echo "Copying udhcpd files..."
