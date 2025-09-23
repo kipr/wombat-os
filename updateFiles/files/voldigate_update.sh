@@ -44,6 +44,8 @@ sudo apt-get remove --purge \
   podman \
   libxcb-doc -y
 
+sudo apt autoremove --purge -y
+
 sudo rm -rf /var/lib/containers/*
 sudo rm -rf /var/lib/apt/lists/*
 
@@ -51,7 +53,6 @@ echo "Reorganizing users.json into new voldigate users.json structure..."
 
 cd "$SCRIPT_DIR"
 
-echo pwd
 bash ./reorganizeUsersJson.sh
 
 if [ -f "$CLASSROOM_JSON_PATH" ]; then
