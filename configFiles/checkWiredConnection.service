@@ -4,10 +4,11 @@ After=NetworkManager.service
 Wants=NetworkManager.service
 
 [Service]
-ExecStart=/home/kipr/wombat-os/configFiles/checkWombatWiredConnect_temp.sh
+ExecStart=/home/kipr/wombat-os/configFiles/checkWombatWiredConnection_temp.sh
 Restart=always
 User=root
 Group=kipr
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

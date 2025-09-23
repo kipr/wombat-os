@@ -12,33 +12,29 @@ if ! nmcli connection show | grep -q "$WIRED_CONN"; then
     nmcli connection modify "$WIRED_CONN" connection.autoconnect no
 fi
 
-while true; do
-    # Check if Ethernet cable is plugged in
-    if ethtool "$ETH_IF" 2>/dev/null | grep -q "Link detected: yes"; then
-        echo "$(date) - Ethernet detected, bringing up $WIRED_CONN"
+# Check if Ethernet cable is plugged in
+if ethtool "$ETH_IF" 2>/dev/null | grep -q "Link detected: yes"; then
+    echo "$(date) - Ethernet detected, bringing up $WIRED_CONN"
 
-        # Bring up wired connection
-        nmcli connection up "$WIRED_CONN"
+    # Bring up wired connection
+    nmcli connection up "$WIRED_CONN"
 
-        # Wait until the interface has the correct IP
-        while ! ip -4 addr show "$ETH_IF" | grep -q "${STATIC_IP%/*}"; do
-            echo "$(date) - Waiting for $ETH_IF to get IP $STATIC_IP..."
-            sleep 1
-        done
+    # Wait until the interface has the correct IP
+    while ! ip -4 addr show "$ETH_IF" | grep -q "${STATIC_IP%/*}"; do
+        echo "$(date) - Waiting for $ETH_IF to get IP $STATIC_IP..."
+        sleep 1
+    done
 
-        echo "$(date) - $ETH_IF is up with IP $STATIC_IP, starting DHCP..."
-        sudo systemctl restart "$DHCP_SERVICE"
+    echo "$(date) - $ETH_IF is up with IP $STATIC_IP, starting DHCP..."
+    sudo systemctl restart "$DHCP_SERVICE"
 
-    else
-        echo "$(date) - Ethernet not detected, bringing down $WIRED_CONN"
+else
+    echo "$(date) - Ethernet not detected, bringing down $WIRED_CONN"
 
-        # Bring down wired connection
-        nmcli connection down "$WIRED_CONN"
+    # Bring down wired connection
+    nmcli connection down "$WIRED_CONN"
 
-        # Stop DHCP server
-        sudo systemctl stop "$DHCP_SERVICE"
-    fi
+    # Stop DHCP server
+    sudo systemctl stop "$DHCP_SERVICE"
+fi
 
-    # Check every 5 seconds
-    sleep 5
-done
