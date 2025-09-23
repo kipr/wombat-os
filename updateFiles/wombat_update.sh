@@ -62,7 +62,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable checkWiredConnection.service balancer.service
 
 # Give execute permissions
-sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balance.sh
+sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balancer.sh
 
 # Set up systemd services as replacement for old wombat_launcher
 mkdir -p /home/kipr/.config/systemd/user
@@ -160,13 +160,13 @@ if [ -n "$create3Deb"  ]; then
 fi
 
 #Adding Default Programs
-echo "Checking for Default User"
-TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat Factory Test"
-CP_TARGET="/home/kipr/Documents/KISS/Default User/"
+echo "Checking for Default_User"
+TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat_Factory_Test"
+CP_TARGET="/home/kipr/Documents/KISS/Default_User/"
 if [ ! -d "$CP_TARGET" ]; then
-    mkdir "$CP_TARGET" || echo "Failed to make Default User"
+    mkdir "$CP_TARGET" || echo "Failed to make Default_ User"
 else 
-    echo "Default User already exists"
+    echo "Default_User already exists"
 fi
 echo "Adding Default Programs"
 sudo cp -R "$TARGET" "$CP_TARGET" || echo "Failed to copy Default Programs"
