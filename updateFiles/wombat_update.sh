@@ -136,6 +136,33 @@ sudo dpkg -i pkgs/installs/libgpiod2_1.6.2-1_arm64.deb
 sudo dpkg -i pkgs/installs/libgpiod-dev_1.6.2-1_arm64.deb
 sudo dpkg -i pkgs/installs/gpiod_1.6.2-1_arm64.deb
 
+# Cleanup
+echo "Cleaning up space..."
+sudo apt-get remove --purge \
+  libboost1.74-dev \
+  pypy \
+  firmware-atheros \
+  firmware-libertas \
+  firmware-misc-nonfree \
+  containernetworking-plugins \
+  vlc-l10n \
+  realvnc-vnc-server \
+  pocketsphinx-en-us \
+  git \
+  podman \
+  libxcb-doc -y
+
+sudo apt autoremove --purge -y
+
+sudo rm -rf /var/lib/containers/*
+sudo rm -rf /var/lib/apt/lists/*
+sudo rm -rf /var/cache/apt/archives/*
+sudo rm -rf /home/kipr/Bookshelf
+sudo rm -rf /usr/share/doc/*
+sudo rm -rf /usr/share/man/*
+sudo rm -rf /usr/share/locale/*
+
+
 cd $HOME
 
 ###############################
@@ -212,6 +239,8 @@ cd /home/kipr
 if [ -d "wombat-os-old" ]; then
   sudo rm -R wombat-os-old || { echo "Failed to remove old wombat-os"; exit 1; }
 fi
+
+sudo chown -R kipr:kipr /home/kipr/Documents
 
 echo "Rebooting..."
 
