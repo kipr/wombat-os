@@ -1,0 +1,6 @@
+[Unit]
+Description=All Wombat components
+Wants=botui.service voldigate.service first-time-screen.service
+
+[Install]
+WantedBy=default.target

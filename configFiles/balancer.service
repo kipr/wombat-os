@@ -1,0 +1,13 @@
+[Unit]
+Description=Dynamic WiFi Channel Switcher
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/kipr/wombat-os/configFiles/balancer.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
