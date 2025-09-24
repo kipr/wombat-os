@@ -154,14 +154,7 @@ sudo apt-get remove --purge \
 
 sudo apt autoremove --purge -y
 
-sudo rm -rf /var/lib/containers/*
-sudo rm -rf /var/lib/apt/lists/*
-sudo rm -rf /var/cache/apt/archives/*
-sudo rm -rf /home/kipr/Bookshelf
-sudo rm -rf /usr/share/doc/*
-sudo rm -rf /usr/share/man/*
-sudo rm -rf /usr/share/locale/*
-
+sudo rm -rf /var/lib/containers/* /var/lib/apt/lists/* /var/cache/apt/archives/* /home/kipr/Bookshelf /usr/share/doc/* /usr/share/man/* /usr/share/locale/*
 
 cd $HOME
 
