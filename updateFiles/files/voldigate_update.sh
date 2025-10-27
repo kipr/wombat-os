@@ -50,8 +50,8 @@ sudo rm -rf /var/lib/containers/*
 sudo rm -rf /var/lib/apt/lists/*
 
 # Remove Create Test if present
-if [ -d "/home/kipr/Documents/Default User/Create Test" ]; then
-  sudo rm -rf "/home/kipr/Documents/Default User/Create Test"
+if [ -d "/home/kipr/Documents/KISS/Default User/Create Test" ]; then
+  sudo rm -rf "/home/kipr/Documents/KISS/Default User/Create Test"
   echo "Create Test removed!"
 fi
 
