@@ -49,6 +49,12 @@ sudo apt autoremove --purge -y
 sudo rm -rf /var/lib/containers/*
 sudo rm -rf /var/lib/apt/lists/*
 
+# Remove Create Test if present
+if [ -d "/home/kipr/Documents/Default User/Create Test" ]; then
+  sudo rm -rf "/home/kipr/Documents/Default User/Create Test"
+  echo "Create Test removed!"
+fi
+
 echo "Reorganizing users.json into new voldigate users.json structure..."
 
 cd "$SCRIPT_DIR"
