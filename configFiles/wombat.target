@@ -1,6 +1,6 @@
 [Unit]
 Description=All Wombat components
-Wants=botui.service harrogate.service first-time-screen.service
+Wants=botui.service harrogate.service first-time-screen.service balancer.service
 
 [Install]
 WantedBy=default.target
