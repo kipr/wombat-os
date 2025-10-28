@@ -53,23 +53,13 @@ sudo cat interfaces_wifi.txt > /etc/network/interfaces
 # Copy new Wombat picture over old one
 sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 
-# Copy checkWiredConnection.service to /etc/systemd/system
+# Set up systemd services as replacement for old wombat_launcher
 sudo cp balancer.service checkWiredConnection.service botui.service first-time-screen.service harrogate.service wombat.target /etc/systemd/system
 sudo systemctl daemon-reload
 sudo systemctl enable checkWiredConnection.service wombat.target
 
 # Give checkWombatWiredConnect.sh execute permissions
 sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balancer.sh
-
-# Set up systemd services as replacement for old wombat_launcher
-#cp botui.service first-time-screen.service harrogate.service wombat.target /home/kipr/.config/systemd/user/
-#sudo chown -R kipr:kipr /home/kipr/.config
-## Make sure these commands run as kipr user
-## TODO: More granular permissions instead of just sudoing everywhere
-#export XDG_RUNTIME_DIR="/run/user/1000"
-#export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
-#sudo -E -u kipr systemctl --user daemon-reload
-#sudo -E -u kipr systemctl --user enable wombat.target
 
 # Remove old xdg-autostart file
 sudo rm /etc/xdg/autostart/botui.desktop
