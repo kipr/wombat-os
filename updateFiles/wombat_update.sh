@@ -3,11 +3,10 @@
 #######################################################################################################
 #                                                                                                     #
 #       Authors: Tim Corbly, Erin Harrington, Thomas Wells                                            #
-#       Date: 2024-11-19                                                                              #
+#       Date: 2025-09-24                                                                              #
 #       Description: True Wombat update file in versions >= 31.0.0                                    #
 #                                                                                                     #
 #######################################################################################################
-
 
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
@@ -52,28 +51,16 @@ sudo cp board_copyright_year.txt /usr/share/kipr/
 sudo cp journald.conf /etc/systemd/journald.conf
 sudo cat interfaces_wifi.txt > /etc/network/interfaces
 
-
 # Copy new Wombat picture over old one
 sudo cp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 
-# Copy checkWiredConnection.service and balancer.service to /etc/systemd/system
-sudo cp balancer.service checkWiredConnection.service /etc/systemd/system
+# Set up systemd services as replacement for old wombat_launcher
+sudo cp balancer.service checkWiredConnection.service botui.service first-time-screen.service voldigate.service wombat.target /etc/systemd/system
 sudo systemctl daemon-reload
-sudo systemctl enable checkWiredConnection.service balancer.service
+sudo systemctl enable checkWiredConnection.service wombat.target
 
 # Give execute permissions
 sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balancer.sh
-
-# Set up systemd services as replacement for old wombat_launcher
-mkdir -p /home/kipr/.config/systemd/user
-cp botui.service first-time-screen.service voldigate.service wombat.target /home/kipr/.config/systemd/user/
-sudo chown -R kipr:kipr /home/kipr/.config
-# Make sure these commands run as kipr user
-# TODO: More granular permissions instead of just sudoing everywhere
-export XDG_RUNTIME_DIR="/run/user/1000"
-export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
-sudo -E -u kipr systemctl --user daemon-reload
-sudo -E -u kipr systemctl --user enable wombat.target
 
 # Remove old xdg-autostart file
 sudo rm /etc/xdg/autostart/botui.desktop
@@ -126,6 +113,26 @@ sudo dpkg -i pkgs/installs/libgpiod2_1.6.2-1_arm64.deb
 sudo dpkg -i pkgs/installs/libgpiod-dev_1.6.2-1_arm64.deb
 sudo dpkg -i pkgs/installs/gpiod_1.6.2-1_arm64.deb
 
+# Cleanup
+echo "Cleaning up space..."
+sudo apt-get remove --purge \
+  libboost1.74-dev \
+  pypy \
+  firmware-atheros \
+  firmware-libertas \
+  firmware-misc-nonfree \
+  containernetworking-plugins \
+  vlc-l10n \
+  realvnc-vnc-server \
+  pocketsphinx-en-us \
+  git \
+  podman \
+  libxcb-doc -y
+
+sudo apt autoremove --purge -y
+
+sudo rm -rf /var/lib/containers/* /var/lib/apt/lists/* /var/cache/apt/archives/* /home/kipr/Bookshelf /usr/share/doc/* /usr/share/man/* /usr/share/locale/*
+
 cd $HOME
 
 ###############################
@@ -165,7 +172,7 @@ TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat_Factory_Test"
 CP_TARGET="/home/kipr/Documents/KISS/Default_User/"
 if [ ! -d "$CP_TARGET" ]; then
     mkdir "$CP_TARGET" || echo "Failed to make Default_ User"
-else 
+else
     echo "Default_User already exists"
 fi
 echo "Adding Default Programs"

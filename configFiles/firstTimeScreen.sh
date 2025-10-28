@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 if grep -q "inverted" /etc/X11/xorg.conf.d/99-calibration.conf
 then
