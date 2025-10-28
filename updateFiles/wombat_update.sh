@@ -167,13 +167,13 @@ if [ -n "$create3Deb"  ]; then
 fi
 
 #Adding Default Programs
-echo "Checking for Default_User"
-TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat_Factory_Test"
-CP_TARGET="/home/kipr/Documents/KISS/Default_User/"
+echo "Checking for Default User"
+TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat Factory Test"
+CP_TARGET="/home/kipr/Documents/KISS/Default User/"
 if [ ! -d "$CP_TARGET" ]; then
-    mkdir "$CP_TARGET" || echo "Failed to make Default_ User"
-else
-    echo "Default_User already exists"
+    mkdir "$CP_TARGET" || echo "Failed to make Default User"
+else 
+    echo "Default User already exists"
 fi
 echo "Adding Default Programs"
 sudo cp -R "$TARGET" "$CP_TARGET" || echo "Failed to copy Default Programs"
