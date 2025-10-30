@@ -86,6 +86,21 @@ if [ -n "$1" ]; then
   fi
 #No argument was passed -> ethernet update
 else
+  # Check if Git is installed
+  if git --version >/dev/null 2>&1; then
+    echo "Git is already installed: $(git --version)"
+  else
+    echo "Git not found. Installing..."
+
+    # Update and install Git; exit if the install fails
+    sudo apt-get update -y && sudo apt-get install -y git || {
+        echo "Git installation failed."
+        exit 1
+    }
+    
+    echo "Git installed successfully: $(git --version)"
+  fi
+  
   # Clone the repo
   echo "Cloning wombat-os"
   git clone https://github.com/kipr/wombat-os.git || {
