@@ -1,0 +1,12 @@
+[Unit]
+Description=Wombat First-Time Screen
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/kipr/wombat-os/configFiles/firstTimeScreen.sh
+RemainAfterExit=no
+Restart=on-failure
+RestartSec=3
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/home/kipr/.Xauthority"
