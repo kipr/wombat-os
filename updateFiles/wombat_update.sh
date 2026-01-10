@@ -28,6 +28,7 @@ if [ ! -f /usr/share/kipr/board_fw_version.txt ]; then
     exit 1
 fi
 
+
 ###############################
 #
 # Move update files
@@ -51,14 +52,14 @@ sudo cp journald.conf /etc/systemd/journald.conf
 sudo cat interfaces_wifi.txt > /etc/network/interfaces
 
 # Copy new Wombat picture over old one
-sudo scp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
+sudo cp $HOME/wombat-os/wombat.jpg /usr/share/rpd-wallpaper/wombat.jpg
 
 # Set up systemd services as replacement for old wombat_launcher
-sudo cp balancer.service checkWiredConnection.service botui.service first-time-screen.service harrogate.service wombat.target /etc/systemd/system
+sudo cp balancer.service checkWiredConnection.service botui.service first-time-screen.service voldigate.service wombat.target /etc/systemd/system
 sudo systemctl daemon-reload
 sudo systemctl enable checkWiredConnection.service wombat.target
 
-# Give checkWombatWiredConnect.sh execute permissions
+# Give execute permissions
 sudo chmod +x $HOME/wombat-os/configFiles/checkWombatWiredConnection_temp.sh $HOME/wombat-os/configFiles/balancer.sh
 
 # Remove old xdg-autostart file
@@ -72,7 +73,7 @@ sudo rm /home/kipr/wombat_launcher.sh
 ###############################
 
 #remount root filesystem as read write
-mount -o remount,rw /
+sudo mount -o remount,rw /
 
 
 ###############################
@@ -81,22 +82,9 @@ mount -o remount,rw /
 #
 ###############################
 
-# harrogate
-echo "Updating harrogate..."
+# voldigate
 cd $HOME/wombat-os/updateFiles
-sudo rm -r $HOME/harrogate
-sudo tar -C $HOME -zxvf pkgs/harrogate.tar.gz
-sudo chmod -R 777 /home/kipr/harrogate
-echo "Installing harrogate dependencies..."
-cd $HOME/harrogate
-npm install browserfy
-npm install
-sudo npm install -g gulp@4 gulp-cli
-echo "Killing any running harrogate processes..."
-sudo killall node
-echo "Starting harrogate..."
-sudo gulp &
-cd $HOME/wombat-os/updateFiles
+bash ./files/voldigate_update.sh
 
 # libkar
 echo "Updating libkar..."
@@ -153,9 +141,6 @@ cd $HOME
 #
 ###############################
 
-#Making dynamicChannelSwitch.sh executable
-sudo chmod +x /home/kipr/wombat-os/configFiles/balancer.sh
-
 # Copy udhcpd files to Wombat
 echo "Copying udhcpd files..."
 sudo cp $HOME/wombat-os/configFiles/udhcpd.conf /etc/udhcpd.conf
@@ -181,12 +166,6 @@ if [ -n "$create3Deb"  ]; then
   sudo rm /home/kipr/create3-0.1.0-Linux.deb
 fi
 
-# Copy Wombat Launcher to home directory
-TARGET=/home/kipr/wombat-os/configFiles/wombat_launcher.sh
-echo "Copying the launcher"
-sudo cp "$TARGET" "$HOME"
-sudo chmod 777 "$HOME/wombat_launcher.sh"
-
 #Adding Default Programs
 echo "Checking for Default User"
 TARGET="/home/kipr/wombat-os/updateFiles/files/Wombat Factory Test"
@@ -204,10 +183,6 @@ echo "Flashing the Processor"
 cd /home/kipr/wombat-os/flashFiles
 sudo chmod +x *
 sudo ./wallaby_flash
-
-echo "Letting harrogate finish gulping"
-sleep 70
-
 
 ###############################
 #
