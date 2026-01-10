@@ -7,9 +7,9 @@ The current required packages for building the Wombat are below:
 - [libkar (v1.0.0)](https://github.com/kipr/libkar/releases/tag/v1.0.0)
 - [libwallaby (v1.2.1)](https://github.com/kipr/libwallaby/releases/tag/v1.2.1)
 - [pcompiler (v1.0.0)](https://github.com/kipr/pcompiler/releases/tag/v1.0.0)
-- [harrogate (v1.0.1)](https://github.com/kipr/harrogate/releases/tag/v1.0.1)
+- [voldigate (v1.0.0)](https://github.com/kipr/voldigate/releases/tag/v1.0.0)
 
 # Image
 The Wombat is on v31.1.3.
 
-[Wombat v31.1.3 Image](http://files.kipr.org/wombat/Wombat_v31.1.3.img)
+[Wombat v32.0.0 Image](http://files.kipr.org/wombat/Wombat_v32.0.0.img)
