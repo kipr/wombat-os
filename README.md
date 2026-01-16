@@ -10,6 +10,5 @@ The current required packages for building the Wombat are below:
 - [voldigate (v1.0.0)](https://github.com/kipr/voldigate/releases/tag/v1.0.0)
 
 # Image
-The Wombat is on v31.1.3.
+Download the latest Wombat image from [Releases](https://github.com/kipr/wombat-os/releases).
 
-[Wombat v32.0.0 Image](http://files.kipr.org/wombat/Wombat_v32.0.0.img)
