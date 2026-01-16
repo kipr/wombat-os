@@ -8,6 +8,22 @@
 #                                                                                                     #
 #######################################################################################################
 
+#####################################
+#
+# Clean up unneeded files for space
+#
+#####################################
+echo "Cleaning up space..."
+
+sudo rm -rf /var/cache/apt/archives/*
+rm -rf /home/kipr/.cache/*
+rm -rf /home/kipr/.npm
+rm -rf /home/kipr/.node-gyp
+rm -rf /home/kipr/Bookshelf
+sudo rm -rf /usr/share/doc/*
+sudo rm -rf /usr/share/man/*
+sudo rm -rf /usr/share/locale/*
+
 HOME=/home/kipr
 CURRENT_FW_VERSION=$(cat "$HOME/wombat-os/configFiles/board_fw_version.txt")
 NEW_FW_VERSION=$(cat configFiles/board_fw_version.txt)
@@ -44,8 +60,8 @@ WOMBAT_OS="wombat-os"
 WOMBAT_OS_NEW=$(find /media/kipr/*/wombat-os-* -maxdepth 0 -type d -name 'wombat-os-*' 2>/dev/null | \
 awk -F'wombat-os-' '
 {
-    split($2, ver, "."); 
-    if (ver[1] >= 31 && ver[2] >= 0 && ver[3] >= 0) 
+    split($2, ver, ".");
+    if (ver[1] >= 31 && ver[2] >= 0 && ver[3] >= 0)
         print $0
 }' | sort | tail -n1)
 
@@ -75,7 +91,7 @@ cd /home/kipr/wombat-os/updateFiles || {
 
 # Run update script
 
-sudo chmod u+x wombat_update.sh && sudo /home/kipr/wombat-os/updateFiles/wombat_update.sh || {
+sudo chmod +x wombat_update.sh && sudo /home/kipr/wombat-os/updateFiles/wombat_update.sh || {
   echo "Update Failed"
   exit 1
 }

@@ -1,0 +1,11 @@
+[Unit]
+Description=Voldigate Node.js Server
+After=network.target
+Wants=network.target
+After=botui.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/voldigate-slim-wombat
+ExecStart=node express.js
+Restart=on-failure
