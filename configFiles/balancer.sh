@@ -4,7 +4,9 @@ tag="[BALANCER]"
 max_retries="10"
 
 echo "${tag} Started"
-ap_name="$(sh /home/kipr/wombat-os/flashFiles/wallaby_get_serial.sh)-wombat"
+serial="$(/home/kipr/wombat-os/flashFiles/wallaby_get_serial.sh)" || exit 1
+[ -n "$serial" ] || { echo "empty Wombat serial" >&2; exit 1; }
+ap_name="${serial}-wombat"
 
 cleanup() {
 	# Ensure wifi transmitter is turned back on
